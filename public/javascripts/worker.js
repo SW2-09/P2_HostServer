@@ -24,6 +24,7 @@ function handleChange(event) {
 
     console.log("Worker is not computing");
     w.terminate();
+    w=undefined;
     checkboxes[0].checked = false;
   } 
 }
