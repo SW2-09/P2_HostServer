@@ -1,0 +1,52 @@
+*{
+    padding: 0;
+    margin: 0;
+    text-decoration: none;
+    list-style: none;
+}
+
+body{
+    font-family: 'Courier New', Courier, monospace;
+}
+
+header{
+    height: 30%;
+    width: 100%;
+    background-image: url("../images/blue-background.png");
+    background-position: center;
+    background-size: 100%;
+}
+
+label.logo{
+    font-size: 28px;
+    color: white;
+    padding: 0 100px;
+    line-height: 80px;
+    justify-content: left;
+}
+
+a{
+    float: right;
+    font-size: 20px;
+    justify-content: right;
+    display: inline-block;
+    margin: 0 40px;
+    line-height: 80px;
+    color: white;
+    text-transform: uppercase;
+}
+
+h4{
+    float: right;
+    font-size: 20px;
+    justify-content: right;
+    display: inline-block;
+    margin: 0 20px;
+    line-height: 80px;
+    color: white;
+    text-transform: uppercase;
+}
+
+.netflix{
+    height: 100%;
+}

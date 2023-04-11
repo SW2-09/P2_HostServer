@@ -1,0 +1,37 @@
+<link rel="stylesheet" href="/stylesheets/login.css">
+<body>
+<div class="login-container">
+  <div class="login-form">
+    <div class="login-header">
+      <h1 class="login-title"><i class="login-icon"></i>Login</h1>
+      <%= include ("./partials/messages"); %>
+    </div>
+    <form action="/worker/login" method="POST">
+      <div class="form-group">
+        <label for="name">Username</label>
+        <input
+          type="name"
+          id="name"
+          name="name"
+          class="form-control"
+          placeholder="Username"
+        />
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          class="form-control"
+          placeholder="Enter Password"
+        />
+      </div>
+      <button type="submit" class="login-button">Login</button>
+    </form>
+    <p class="register-link">
+      No Account? <a href="/worker/register">Register</a>
+    </p>
+  </div>
+</div>
+</body>

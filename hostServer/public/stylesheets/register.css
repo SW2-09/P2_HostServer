@@ -1,0 +1,79 @@
+body{
+    background-image: url("../images/blue-background.png");
+    background-size: cover;
+    background-position: center;
+}
+
+.register-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+
+  }
+  
+  .register-form {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.2);
+    width: 350px;
+  }
+  
+
+  .register-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 30px;
+  }
+
+  .register-title {
+    color: #333;
+    font-size: 24px;
+    margin-top: 0;
+  }
+
+  .register-button {
+    width: 100%;
+    height: 40px;
+    background-color: rgb(10, 13, 59);
+    border: none;
+    color: #fff;
+    border-radius: 3px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .register-button:hover {
+    background-color: rgb(0, 174, 239);
+  }
+  
+  .register-link {
+    margin-top: 10px;
+    text-align: center;
+    color: #333;
+  }
+  
+  .register-link a:hover {
+    text-decoration: underline;
+  }
+
+  .form-group {
+    margin-bottom: 15px;
+  }
+
+  .form-control {
+    width: 100%;
+    height: 30px;
+    padding: 5px;
+    border-radius: 3px;
+    border: none;
+    background-color: #f5f5f5;
+    color: #333;
+    font-size: 14px;
+  }
+  
+  

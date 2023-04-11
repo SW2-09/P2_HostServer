@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="/stylesheets/worker.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="/stylesheets/navigationsbar.css">
+    <script src="javascripts/worker.js"></script>
+    <title></title>
+  </head>
+  
+  <body>
+    <header>
+      <label class="logo"> Gridflix</label>
+      <a href="/worker/logout" class="">Logout</a>
+      <h4> <%= name %> </h4>
+
+    </header>
+    <div class="frontpage">
+      <div class="left">
+        <div class="video" style="--aspect-ratio: 2/3">
+          <iframe
+            src="https://www.youtube.com/embed/aqz-KE-bpKQ"
+            title="YouTube video player"
+            frameborder="0"
+            allowfullscreen
+          ></iframe>
+        </div>
+      </div>
+      <div class="right">
+        <div class="userinfo">
+          <h2>Account Settings</h2>
+        </div>
+        <div class="compute">
+          <div class="header">
+            <h3>Contribute</h3>
+          </div>
+          Do you want to compute while watching Netflix?
+          <br />
+          <label>
+            <input
+              type="checkbox"
+              name="option"
+              value="yes"
+              onchange="handleChange(event)"
+            />
+            Yes
+          </label>
+
+          <label>
+            <input
+              type="checkbox"
+              name="option"
+              value="no"
+              onchange="handleChange(event)"
+            />
+            No
+          </label>
+        </div>
+        <br />
+        <div class="subtasks">
+          <div class="header">
+            <h3>Contribute History</h3>
+          </div>
+          Number of subtasks completed: <%= tasks_computed  %>
+        </div>
+        <br />
+        <div class="points">
+          <div class="header">
+            <h3>Subscription</h3>
+          </div>
+          Points obtained: <span id="pointsObtained">0</span>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
