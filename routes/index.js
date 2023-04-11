@@ -1,13 +1,16 @@
 export {router}
 
 import express from "express"
-import { ensureAuthenticated } from "../config/authentication.js";
+import passport from "passport";
+import { ensureAuthenticated, checkLoggedIn } from "../config/authentication.js";
 
 const router = express.Router();
 
-router.get('/', (req, res) =>{
+
+router.get('/',checkLoggedIn, (req, res) =>{
     res.render('welcome')
 })
+
 
 router.get('/worker',ensureAuthenticated, (req, res) =>{
     res.render('worker',{

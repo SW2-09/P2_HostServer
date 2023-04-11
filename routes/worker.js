@@ -6,17 +6,19 @@ import bcrypt from "bcryptjs"
 
 const workerRoute = express.Router();
 
+import { checkLoggedIn } from "../config/authentication.js";
+
 //User model
 import { User } from "../models/User.js";
 
+
 //login page
-workerRoute.get('/login',(req,res)=>{
+workerRoute.get('/login', checkLoggedIn,(req,res)=>{
   res.render("login");
 })
 
-
 //register page
-workerRoute.get('/register',(req,res)=>{
+workerRoute.get('/register', checkLoggedIn,(req,res)=>{
   res.render('register');
 })
 
