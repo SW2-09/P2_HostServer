@@ -34,7 +34,7 @@ workerRoute.post('/register', (req,res) =>{
 
   //Require username
   if(!name && password && password2) {
-    errors.push({msg: 'Whaaat'});
+    errors.push({msg: 'Please enter a username'});
    }
  
 
