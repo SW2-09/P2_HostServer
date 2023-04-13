@@ -26,6 +26,7 @@ workerRoute.get('/register', checkLoggedIn,(req,res)=>{
 workerRoute.post('/register', (req,res) =>{
   const {name, password, password2, tasks_computed} = req.body;
   let errors = [];
+  console.log(req.body)
 
   //Check required fiels
   if(!name && !password && !password2) {
@@ -33,10 +34,9 @@ workerRoute.post('/register', (req,res) =>{
   }
 
   //Require username
-  if(!name && password && password2) {
+  if(!name) {
     errors.push({msg: 'Please enter a username'});
-   }
- 
+   } 
 
   //Check password match
   if(name && password != password2){
@@ -45,15 +45,12 @@ workerRoute.post('/register', (req,res) =>{
 
   //Check if there is an error in the array
   if(errors.length > 0){
-    res.render('register',{
-       errors, 
-       name,
-       password,
-       password2,
-       tasks_computed
+    res.render('register',{ 
+       errors,
     });
   } else{
    //validation passed
+      console.log('validation passed')
       User.findOne({name: name})
       .then(user =>{
            if(user){
