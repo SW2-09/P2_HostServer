@@ -28,12 +28,18 @@ workerRoute.post('/register', (req,res) =>{
   let errors = [];
 
   //Check required fiels
-  if(!name || !password || !password2) {
-   errors.push({msg: 'Please enter a password'});
+  if(!name && !password && !password2) {
+   errors.push({msg: 'Please enter a username and password'});
   }
 
+  //Require username
+  if(!name && password && password2) {
+    errors.push({msg: 'Please enter a username'});
+   }
+ 
+
   //Check password match
-  if(password != password2){
+  if(name && password != password2){
        errors.push({msg: 'Passwords do not match'});
   }
 

@@ -63,8 +63,6 @@ app.use('/', router )
 
 //Worker page
 import { workerRoute as workerRoute } from "./routes/worker.js";
-app.use('/', workerRoute);
-
 app.use("/worker", workerRoute)
 
 app.listen(port, () =>
