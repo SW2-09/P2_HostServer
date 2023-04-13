@@ -13,8 +13,9 @@ import { User } from "../models/User.js";
 
 
 //login page
-workerRoute.get('/login', checkLoggedIn,(req,res)=>{
-  res.render("login");
+workerRoute.get('/login', checkLoggedIn,(req,res,next)=>{
+  const errors = req.flash().error || [];
+  res.render("login", { errors });
 })
 
 //register page
@@ -93,6 +94,7 @@ workerRoute.post('/register', (req,res) =>{
 workerRoute.post('/login',(req,res,next)=>{
   console.log(req.body)
   passport.authenticate('local',{
+      failureFlash: true,
       successRedirect: '/worker',
       failureRedirect: '/worker/login'
   })(req, res, next);

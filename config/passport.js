@@ -12,12 +12,12 @@ import { User } from '../models/User.js';
 //Taken from passport website 
 function checkPassport(passport) {
     passport.use(
-        new localStrategy({usernameField: 'name'}, (name, password, done) =>{
+        new localStrategy({passReqToCallback : true,  usernameField: 'name'}, (req, name, password, done) =>{
             //Match User
             User.findOne({name: name})
             .then(user => {
                 if(!user){
-                    return done(null, false, {msg: 'That name is username is not registrered'});
+                    return done(null, false, req.flash("error","User not found"));
                 }
 
                 //Match password
@@ -26,7 +26,7 @@ function checkPassport(passport) {
                     if (isMatch) {
                       return done(null, user);
                     } else {
-                      return done(null, false, {msg: 'Password incorrect' });
+                      return done(null, false, req.flash("error","Wrong password"));
                     }
                   });
             })

@@ -12,6 +12,7 @@ import expressLayouts from "express-ejs-layouts";
 import mongoose from "mongoose";
 import passport from "passport";
 import session from "express-session";
+import flash from "connect-flash";
 
 const app = express();
 
@@ -38,7 +39,7 @@ mongoose.connect(db, {useNewUrlParser: true, useUnifiedTopology: true})
 //EJS setup
 app.use(expressLayouts);
 app.set("view engine", "ejs"); // Makes .ejs files possible to use
-
+app.use(flash());
 
 //Express session
 app.use(
