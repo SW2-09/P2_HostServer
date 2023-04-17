@@ -47,7 +47,4 @@ function stopWsConnection(ws){
     ws.close();
 }
 
-//Ensure only 1 checkbox can be checked
-
-
 openWsConnection();

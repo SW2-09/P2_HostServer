@@ -23,8 +23,8 @@ workerRoute.get('/register', checkLoggedIn,(req,res)=>{
 })
 
 //register handle
-workerRoute.post('/register', (req,res) =>{
-  const {name, password, password2, tasks_computed} = req.body;
+workerRoute.post('/register', (req,res) =>{ console.log(req.body)
+  const {name, password, password2, compute} = req.body;
   let errors = [];
 
   //Check required fiels
@@ -50,7 +50,7 @@ workerRoute.post('/register', (req,res) =>{
        name,
        password,
        password2,
-       tasks_computed
+       compute
     });
   } else{
    //validation passed
@@ -64,13 +64,13 @@ workerRoute.post('/register', (req,res) =>{
                    name: name,
                    password: password,
                    password2: password2,
-                   tasks_computed: tasks_computed
+                   compute: compute
                 });
            } else{
                const newUser = new User ({
                    name: name,
                    password: password,
-                   tasks_computed: tasks_computed 
+                   compute: req.body.checkboxYes !== undefined
                });
 
                //Check the hashed password. Default function
