@@ -13,8 +13,9 @@ import { User } from "../models/User.js";
 
 
 //login page
-workerRoute.get('/login', checkLoggedIn,(req,res)=>{
-  res.render("login");
+workerRoute.get('/login', checkLoggedIn,(req,res,next)=>{
+  const errors = req.flash().error || [];
+  res.render("login", { errors });
 })
 
 //register page
@@ -26,6 +27,7 @@ workerRoute.get('/register', checkLoggedIn,(req,res)=>{
 workerRoute.post('/register', (req,res) =>{ console.log(req.body)
   const {name, password, password2, compute} = req.body;
   let errors = [];
+  console.log(req.body)
 
   //Check required fiels
   if(!name && !password && !password2) {
@@ -33,10 +35,9 @@ workerRoute.post('/register', (req,res) =>{ console.log(req.body)
   }
 
   //Require username
-  if(!name && password && password2) {
+  if(!name) {
     errors.push({msg: 'Please enter a username'});
-   }
- 
+   } 
 
   //Check password match
   if(name && password != password2){
@@ -45,15 +46,18 @@ workerRoute.post('/register', (req,res) =>{ console.log(req.body)
 
   //Check if there is an error in the array
   if(errors.length > 0){
+   remember_if_yes
     res.render('register',{
        errors, 
        name,
        password,
        password2,
        compute
+
     });
   } else{
    //validation passed
+      console.log('validation passed')
       User.findOne({name: name})
       .then(user =>{
            if(user){
@@ -96,6 +100,7 @@ workerRoute.post('/register', (req,res) =>{ console.log(req.body)
 workerRoute.post('/login',(req,res,next)=>{
   console.log(req.body)
   passport.authenticate('local',{
+      failureFlash: true,
       successRedirect: '/worker',
       failureRedirect: '/worker/login'
   })(req, res, next);
