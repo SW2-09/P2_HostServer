@@ -12,10 +12,10 @@
   
   <body>
     <header>
-      <label class="logo"> Gridflix</label>
+      <label class="logo"> GridFlix</label>
       <a href="/worker/logout" class="">Logout</a>
       <h4> <%= name %> </h4>
-
+      <h4>Welcome</h4>
     </header>
     <div class="frontpage">
       <div class="left">
@@ -34,29 +34,22 @@
         </div>
         <div class="compute">
           <div class="header">
-            <h3>Contribute</h3>
+          <h3>Contribute</h3> 
           </div>
-          Do you want to compute while watching Netflix?
-          <br />
-          <label>
-            <input
-              type="checkbox"
-              name="option"
-              value="yes"
-              onchange="handleChange(event)"
-            />
-            Yes
-          </label>
 
-          <label>
-            <input
-              type="checkbox"
-              name="option"
-              value="no"
-              onchange="handleChange(event)"
-            />
-            No
-          </label>
+          <body onload="handleChange({target: document.querySelector('input[name=option]')})">
+
+          <% if (compute) { %>
+            <div class="computeYes" id="computeYes">
+              You are currently computing while watching GridFlix
+              <input type="checkbox" name="option" value="yes"  checked>
+            </div>
+          <% } else { %>
+            <div class="computeNo" id="computeNo">
+              You are currently not computing while watching GridFlix
+              <input type="checkbox" name="option" value="no" checked>
+            </div>
+          <% } %>
         </div>
         <br />
         <div class="subtasks">

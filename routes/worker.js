@@ -24,8 +24,8 @@ workerRoute.get('/register', checkLoggedIn,(req,res)=>{
 })
 
 //register handle
-workerRoute.post('/register', (req,res) =>{
-  const {name, password, password2, tasks_computed} = req.body;
+workerRoute.post('/register', (req,res) =>{ console.log(req.body)
+  const {name, password, password2, compute} = req.body;
   let errors = [];
   console.log(req.body)
 
@@ -46,8 +46,14 @@ workerRoute.post('/register', (req,res) =>{
 
   //Check if there is an error in the array
   if(errors.length > 0){
-    res.render('register',{ 
-       errors,
+   remember_if_yes
+    res.render('register',{
+       errors, 
+       name,
+       password,
+       password2,
+       compute
+
     });
   } else{
    //validation passed
@@ -62,13 +68,13 @@ workerRoute.post('/register', (req,res) =>{
                    name: name,
                    password: password,
                    password2: password2,
-                   tasks_computed: tasks_computed
+                   compute: compute
                 });
            } else{
                const newUser = new User ({
                    name: name,
                    password: password,
-                   tasks_computed: tasks_computed 
+                   compute: req.body.checkboxYes !== undefined
                });
 
                //Check the hashed password. Default function

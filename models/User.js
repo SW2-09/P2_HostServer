@@ -13,6 +13,10 @@ const userSchema = new mongoose.Schema({
     tasks_computed: {
         type: Number,
         default: 0
+    },
+    compute: {
+        type: Boolean,
+        default: false
     }
 })
 

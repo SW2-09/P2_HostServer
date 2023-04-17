@@ -4,8 +4,6 @@ import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs'
 import { Strategy as localStrategy } from 'passport-local';
 
-
-
 //Load user model
 import { User } from '../models/User.js';
 
