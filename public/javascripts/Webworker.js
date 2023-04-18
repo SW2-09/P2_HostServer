@@ -17,6 +17,8 @@ function openWsConnection() {
       let start_comp = Date.now();
       let solution = alg(nextSubtask.matrixA, nextSubtask.matrixB.entries);
       let end_comp = Date.now();
+      let jobId = nextSubtask.jobId;
+      let taskId = nextSubtask.taskId;
 
       //FORSØG
       subtasks_completed++;
@@ -27,6 +29,8 @@ function openWsConnection() {
 
       let subSolution = {
         workerID: workerID,
+        jobId: jobId,
+        taskId: taskId,
         solution: solution,
       };
 
@@ -43,6 +47,6 @@ function stopWsConnection(ws) {
   ws.close();
 }
 
-remember_if_yes
+// remember_if_yes
 openWsConnection();
 
