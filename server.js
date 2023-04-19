@@ -17,7 +17,6 @@ import flash from "connect-flash";
 const app = express();
 
 app.use(express.static('public')); // Middleware function that serves static files (e.g. css files) https://expressjs.com/en/starter/static-files.html
-// app.use(express.urlencoded({ extended: true })); // Middleware function that parses the body of a request (e.g. form data)
 app.use(express.json()); // This allows us to parse json data
 
 //User model

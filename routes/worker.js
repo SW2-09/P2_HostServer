@@ -13,15 +13,25 @@ import { User } from "../models/User.js";
 
 
 //login page
-workerRoute.get('/login', checkLoggedIn,(req,res,next)=>{
+workerRoute.get('/login', checkLoggedIn,(req,res,next) => {
   const errors = req.flash().error || [];
   res.render("login", { errors });
 })
 
 //register page
-workerRoute.get('/register', checkLoggedIn,(req,res)=>{
-  res.render('register');
+workerRoute.get('/register', checkLoggedIn,(req,res) => {
+  res.render('register'); 
 })
+
+//
+workerRoute.get('/updateDB', (req,res) => {
+  console.log("lav Noget")
+  res.json({
+    tasks_computed: req.user.tasks_computed,
+    compute: req.user.compute,
+
+})})
+
 
 //register handle
 workerRoute.post('/register', (req,res) =>{ console.log(req.body)
@@ -74,7 +84,8 @@ workerRoute.post('/register', (req,res) =>{ console.log(req.body)
                const newUser = new User ({
                    name: name,
                    password: password,
-                   compute: req.body.checkboxYes !== undefined
+                   compute: req.body.checkboxYes !== undefined,
+                   tasks_computed: 0
                });
 
                //Check the hashed password. Default function
@@ -113,3 +124,4 @@ workerRoute.get('/logout', (req, res) =>{
       res.redirect('/')
       })
     })
+

@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="/stylesheets/worker.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="/stylesheets/navigationsbar.css">
-    <script src="javascripts/worker.js"></script>
     <title></title>
   </head>
   
@@ -14,58 +13,26 @@
     <header>
       <label class="logo"> GridFlix</label>
       <a href="/worker/logout" class="">Logout</a>
-      <h4> <%= name %> </h4>
-      <h4>Welcome</h4>
+      <a id="settings" onclick="changePageToSettings()"> Settings </a>
+      <a id="settings" onclick="changePageToHome()"> Home </a>
+      <a> <%= name %> </a>
     </header>
-    <div class="frontpage">
-      <div class="left">
-        <div class="video" style="--aspect-ratio: 2/3">
-          <iframe
-            src="https://www.youtube.com/embed/aqz-KE-bpKQ"
-            title="YouTube video player"
-            frameborder="0"
-            allowfullscreen
-          ></iframe>
-        </div>
-      </div>
-      <div class="right">
-        <div class="userinfo">
-          <h2>Account Settings</h2>
-        </div>
-        <div class="compute">
-          <div class="header">
-          <h3>Contribute</h3> 
-          </div>
-
-          <body onload="handleChange({target: document.querySelector('input[name=option]')})">
-
-          <% if (compute) { %>
-            <div class="computeYes" id="computeYes">
-              You are currently computing while watching GridFlix
-              <input type="checkbox" name="option" value="yes"  checked>
-            </div>
-          <% } else { %>
-            <div class="computeNo" id="computeNo">
-              You are currently not computing while watching GridFlix
-              <input type="checkbox" name="option" value="no" checked>
-            </div>
-          <% } %>
-        </div>
-        <br />
-        <div class="subtasks">
-          <div class="header">
-            <h3>Contribute History</h3>
-          </div>
-          Number of subtasks completed: <%= tasks_computed  %>
-        </div>
-        <br />
-        <div class="points">
-          <div class="header">
-            <h3>Subscription</h3>
-          </div>
-          Points obtained: <span id="pointsObtained">0</span>
-        </div>
-      </div>
+    <div class="mainDiv" id="mainDiv">
     </div>
+
+    <body onload="handleChange({target: document.querySelector('input[name=option]')})">
+      <% if (compute) { %>
+        <div class="computeYes" id="computeYes">
+          <input type="checkbox" name="option" value="yes"  checked>
+        </div>
+      <% } else { %>
+        <div class="computeNo" id="computeNo">
+          <input type="checkbox" name="option" value="no" checked>
+        </div>
+      <% } %>
+      </div>
+
   </body>
+  <script src="javascripts/worker.js"></script>
+  <script src="javascripts/pageChanger.js" ></script>
 </html>

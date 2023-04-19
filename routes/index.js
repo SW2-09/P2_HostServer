@@ -16,6 +16,6 @@ router.get('/worker',ensureAuthenticated, (req, res) =>{
     res.render('worker',{
         name: req.user.name,
         tasks_computed: req.user.tasks_computed,
-        compute: req.user.compute
+        compute: req.user.compute,
     })
 })
