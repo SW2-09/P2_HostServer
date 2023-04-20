@@ -186,7 +186,6 @@ mainDiv.addEventListener("click", async (e) => {
    */
 
 async function getDataFromDB() {
-  let DBdata;
   let respons = await fetch("/worker/updateDB");
   if (!respons.ok) {
     throw new Error("HTTP error " + respons.status);
