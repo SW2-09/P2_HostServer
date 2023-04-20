@@ -123,7 +123,7 @@ async function getContent() {
 
 /**
  * MAYBE ADD ASYNC TO THIS FUNCTION
- * An event listener that run enchangePageToHome() if homeButton is clicked the enchangePageToHome function is called.$
+ * An event listener that run enchangePageToHome() when a button is clicked.
  */
 mainDiv.addEventListener("click", (e) => {
   if(e.target.id === "homeButton") {
@@ -132,14 +132,18 @@ mainDiv.addEventListener("click", (e) => {
 
   /**
  * MAYBE ADD ASYNC TO THIS FUNCTION
- * An event listener that run enchangePageToSettings() if settingsButtonn is clicked the changePageToSettings function is called.$
+ * An event listener that run enchangePageToSettings() when a button is clicked.
  */
 mainDiv.addEventListener("click", (e) => {
     if(e.target.id === "settingsButton") {
       changePageToSettings();
     }})
 
-
+/**
+ * An async function that await the database for a boolean value.
+ * Function then checks if the boolean value is true or false and change the value to the opposite.
+ * Function then sends the new value to the database.
+ */
 mainDiv.addEventListener("click", async (e) => {
   if (e.target.id === "changeComputeButton") {
     if(confirm("Are you sure you want to change your subscription details?") === false) return;
@@ -150,7 +154,7 @@ mainDiv.addEventListener("click", async (e) => {
         headers: {
           "Content-Type": "application/json",
       },
-      body: JSON.stringify({ compute: compute }), 
+      body: JSON.stringify({ compute: compute }),
     });
     
     if(respons.status === 200)
@@ -170,6 +174,10 @@ mainDiv.addEventListener("click", async (e) => {
     } 
   }})
 
+  /**
+   * An async function that await the database and extract the data from the database.
+   * @returns data, the data from the database.
+   */
 
 async function getDataFromDB() {
   let DBdata;
@@ -182,6 +190,10 @@ async function getDataFromDB() {
   return data;
 }
 
+/**
+ * An async function that await the function fetchDataDB() if both boolean is null.
+ * @returns tasks_computed, the number of subtasks completed.    OG MULIGVVIS NAVN
+ */
 async function fetchDataDB() {
   if (tasks_computed === null || compute === null) {
     const respons = await getDataFromDB();
@@ -192,7 +204,9 @@ async function fetchDataDB() {
   return { tasks_computed, compute, name };
 }
 
-
+/**
+ * An async fiunction that changes the page to the ettings site.
+ */
 async function changePageToSettings() {
   const content = await getContent();
   if (mainDiv.innerHTML = content.VideoStream) {
@@ -200,6 +214,10 @@ async function changePageToSettings() {
     mainDiv.innerHTML = content.AccountSettings;
   }
 }
+
+/**
+ * An async function that changes the page to the home site.
+ */
   async function changePageToHome() {
     const content = await getContent();
     if (mainDiv.innerHTML = content.AccountSettings) {
