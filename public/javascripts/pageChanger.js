@@ -23,18 +23,6 @@ async function getContent() {
         <a href="/worker/logout" class="">Logout</a>
       </div>
     </header>
-    ${compute 
-        ? `
-        <div class="computeYes" id="computeYes">
-          <input type="checkbox" name="option" value="yes" checked>
-        </div>
-      `
-        : `
-        <div class="computeNo" id="computeNo">
-          <input type="checkbox" name="option" value="no" checked>
-        </div>
-      `
-    }
       <div class="left">
         <div class="video" style="--aspect-ratio: 2/3">
           <iframe
@@ -74,7 +62,6 @@ async function getContent() {
               ? `
               <div class="computeYes" id="computeYes">
                 You are currently computing while watching GridFlix
-                <input type="checkbox" name="option" value="yes" checked>
                 <input
                   type="button"
                   name="changeComputeButton"
@@ -87,7 +74,6 @@ async function getContent() {
               : `
               <div class="computeNo" id="computeNo">
                 You are currently not computing while watching GridFlix
-                <input type="checkbox" name="option" value="no" checked>
                 <input
                   type="button"
                   name="changeCompute"
@@ -120,6 +106,26 @@ async function getContent() {
   return content;
 }
 
+
+/* Change button hyg*/
+async function handleChange() {
+  const respons = await getDataFromDB();
+  compute = respons.compute;
+  if (compute === true) {
+    if (typeof(w) === "undefined") {
+      w = new Worker("/javascripts/Webworker.js");
+      console.log("Worker is computing");
+    }
+
+  } else if (compute === false){
+    console.log("HEJ")
+    if (typeof(w) !== "undefined") {
+      console.log("Worker is not computing");
+      w.terminate();
+      w = undefined;
+    }
+  }
+  } 
 
 /**
  * MAYBE ADD ASYNC TO THIS FUNCTION

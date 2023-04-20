@@ -1,4 +1,4 @@
-const checkboxes = document.querySelectorAll('input[name="option"]');
+/*const checkboxes = document.querySelectorAll('input[name="option"]');
 const checkboxElement = document.getElementById('checkboxYes')
 
 checkboxes.forEach((checkbox) => {
@@ -25,3 +25,4 @@ function handleChange(event) {
     w=undefined;
   } 
 }
+*/
