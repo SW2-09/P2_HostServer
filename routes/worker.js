@@ -23,15 +23,24 @@ workerRoute.get('/register', checkLoggedIn,(req,res) => {
   res.render('register'); 
 })
 
-//
+//get data from DB
 workerRoute.get('/updateDB', (req,res) => {
-  console.log("lav Noget")
   res.json({
     tasks_computed: req.user.tasks_computed,
     compute: req.user.compute,
-
+    name: req.user.name
 })})
 
+//update compute value
+workerRoute.post('/updateComputeDB', async (req,res) => {
+  try {
+    await User.findOneAndUpdate({name: req.user.name}, {$set: {compute: !req.user.compute}})
+    res.json({message: "compute value changed"})
+  } catch (err) {
+    console.error(err)
+    res.status(500).json({message: "Error updating compute value"})
+  }
+})
 
 //register handle
 workerRoute.post('/register', (req,res) =>{ console.log(req.body)

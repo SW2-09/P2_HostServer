@@ -87,3 +87,18 @@
           </div>
         <% } %>
         </div>
+
+
+
+
+        <header>
+          <div class="header_logo">
+          <label class="logo"> GridFlix</label>
+          </div>
+          <div class="headerItems">
+          <button id="settingsButton" > Settings </button>
+          <button id="homeButton" > Home </button>
+          <a href="/"> <%= name %> </a>
+          <a href="/worker/logout" class="">Logout</a>
+        </div>
+        </header>

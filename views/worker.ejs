@@ -10,27 +10,11 @@
   </head>
   
   <body>
-    <header>
-      <label class="logo"> GridFlix</label>
-      <a href="/worker/logout" class="">Logout</a>
-      <a id="settings" onclick="changePageToSettings()"> Settings </a>
-      <a id="settings" onclick="changePageToHome()"> Home </a>
-      <a> <%= name %> </a>
-    </header>
     <div class="mainDiv" id="mainDiv">
     </div>
 
     <body onload="handleChange({target: document.querySelector('input[name=option]')})">
-      <% if (compute) { %>
-        <div class="computeYes" id="computeYes">
-          <input type="checkbox" name="option" value="yes"  checked>
-        </div>
-      <% } else { %>
-        <div class="computeNo" id="computeNo">
-          <input type="checkbox" name="option" value="no" checked>
-        </div>
-      <% } %>
-      </div>
+      
 
   </body>
   <script src="javascripts/worker.js"></script>

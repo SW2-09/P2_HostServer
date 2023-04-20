@@ -25,10 +25,3 @@ function handleChange(event) {
     w=undefined;
   } 
 }
-
-const button_change = document.getElementById('changeCompute');
-button_change.addEventListener('click', () => {
-  console.log(compute.value)
-  compute != compute;
-  console.log(compute.value);
-})
