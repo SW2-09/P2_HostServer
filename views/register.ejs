@@ -49,8 +49,6 @@
             type="checkbox"
             id="checkboxYes"
             name="checkboxYes"
-            value="<%= typeof compute != 'undefined' ? compute : '' %>"
-            onchange="updateComputeValue(event)"           
           />         
       </div>
       <button type="submit" class="register-button">
@@ -60,26 +58,4 @@
     <p class="register-link">Have An Account? <a href="/worker/login">Login</a></p>
   </div>
 </div>
-
-<script>
-  /*const checkboxElement = document.getElementById('checkboxYes').value
-
-  function updateComputeValue(event){
-  let value = false
-
-  if (event.target.checked) {
-      value = true
-      console.log(value)
-    }
-  else{
-    value = false
-    console.log(value)
-    }
-
-  checkboxElement.value = value
-}
-
-checkboxElement.addEventListener('change', updateComputeValue);
-*/
-</script>
 </body>

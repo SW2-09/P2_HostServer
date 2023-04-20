@@ -13,14 +13,33 @@ import { User } from "../models/User.js";
 
 
 //login page
-workerRoute.get('/login', checkLoggedIn,(req,res,next)=>{
+workerRoute.get('/login', checkLoggedIn,(req,res,next) => {
   const errors = req.flash().error || [];
   res.render("login", { errors });
 })
 
 //register page
-workerRoute.get('/register', checkLoggedIn,(req,res)=>{
-  res.render('register');
+workerRoute.get('/register', checkLoggedIn,(req,res) => {
+  res.render('register'); 
+})
+
+//get data from DB
+workerRoute.get('/updateDB', (req,res) => {
+  res.json({
+    tasks_computed: req.user.tasks_computed,
+    compute: req.user.compute,
+    name: req.user.name
+})})
+
+//update compute value
+workerRoute.post('/updateComputeDB', async (req,res) => {
+  try {
+    await User.findOneAndUpdate({name: req.user.name}, {$set: {compute: !req.user.compute}})
+    res.json({message: "compute value changed"})
+  } catch (err) {
+    console.error(err)
+    res.status(500).json({message: "Error updating compute value"})
+  }
 })
 
 //register handle
@@ -74,7 +93,8 @@ workerRoute.post('/register', (req,res) =>{ console.log(req.body)
                const newUser = new User ({
                    name: name,
                    password: password,
-                   compute: req.body.checkboxYes !== undefined
+                   compute: req.body.checkboxYes !== undefined,
+                   tasks_computed: 0
                });
 
                //Check the hashed password. Default function
@@ -113,3 +133,4 @@ workerRoute.get('/logout', (req, res) =>{
       res.redirect('/')
       })
     })
+

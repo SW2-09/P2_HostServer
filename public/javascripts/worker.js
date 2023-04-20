@@ -13,8 +13,6 @@ checkboxes.forEach((checkbox) => {
 
 function handleChange(event) {
   const option = event.target.value;
-  const checkboxes = document.getElementsByName("option"); 
-
   if (option === "yes" && event.target.checked) {
     if (typeof(w) == "undefined") {
       w = new Worker("/javascripts/Webworker.js");
