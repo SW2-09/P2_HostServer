@@ -10,7 +10,7 @@ function openWsConnection() {
       console.log("Not work to do, waiting for new jobs");
       setTimeout(() => {
         ws.send('{"data": "ready for work"}');
-      }, 5000);
+      }, 10000);
     } else {
       console.log(`You recieved task:\n` + e.data);
       let nextSubtask = JSON.parse(e.data);
