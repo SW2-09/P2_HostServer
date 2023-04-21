@@ -8,6 +8,9 @@ function openWsConnection() {
   ws.addEventListener("message", (e) => {
     if (e.data === "0") {
       console.log("Not work to do, waiting for new jobs");
+      setTimeout(() => {
+        ws.send('{"data": "ready for work"}');
+      }, 5000);
     } else {
       console.log(`You recieved task:\n` + e.data);
       let nextSubtask = JSON.parse(e.data);
