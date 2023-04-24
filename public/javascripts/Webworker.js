@@ -14,12 +14,29 @@ function openWsConnection() {
     } else {
       console.log(`You recieved task:\n` + e.data);
       let nextSubtask = JSON.parse(e.data);
-
+      
       let alg = new Function("A", "B", nextSubtask.alg);
-
-      let start_comp = Date.now();
-      let solution = alg(nextSubtask.matrixA, nextSubtask.matrixB.entries);
-      let end_comp = Date.now();
+      let solution;
+      switch (nextSubtask.jobType) {
+        case "matrixMult":{
+          // let start_comp = Date.now();
+          solution = alg(nextSubtask.data, nextSubtask.commonData.entries);
+          // let end_comp = Date.now();
+          break;
+        }
+        case "plus":{
+          // let start_comp = Date.now();
+          solution = alg(nextSubtask.data[0], nextSubtask.data[1]);
+          // let end_comp = Date.now();
+          break;
+        }
+      
+        default:
+          ws.send('{"data": "ready for work"}');
+          return ws;
+      }
+      
+      
       let jobId = nextSubtask.jobId;
       let taskId = nextSubtask.taskId;
 
@@ -28,7 +45,7 @@ function openWsConnection() {
       console.log("KIG HER " + subtasks_completed);
       subtasks_completed.innerText = subtasks_completed.toString();
 
-      console.log(`Computation took ${(end_comp - start_comp) / 1000} s`);
+      // console.log(`Computation took ${(end_comp - start_comp) / 1000} s`);
 
       let subSolution = {
         workerID: workerID,
