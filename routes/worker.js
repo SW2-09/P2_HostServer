@@ -42,6 +42,18 @@ workerRoute.post('/updateComputeDB', async (req,res) => {
   }
 })
 
+//update tasks_computed value
+workerRoute.post('/updateTasksComputedDB', async (req,res) => {
+  try{
+    await User.findOneAndUpdate({name: req.user.name}, {$inc: {tasks_computed: 1}})
+    res.json({message: "tasks_computed value changed"})
+  }
+  catch(err){
+    console.error(err)
+    res.status(500).json({message: "Error updating tasks_computed value"})
+  }
+})
+
 //register handle
 workerRoute.post('/register', (req,res) =>{ console.log(req.body)
   const {name, password, password2, compute} = req.body;

@@ -86,10 +86,19 @@ async function getContent() {
         </div>
         <br />
         <div class="subtasks">
-          <div class="header">
+        <div class="header">
             <h3>Contribute History</h3>
           </div>
-          Number of subtasks completed: ${tasks_computed}
+        <div class="updateTasksValue" id="updateTasksValue">
+        Number of subtasks completed: ${tasks_computed}
+                <input
+                  type="button"
+                  name="updateTasksValue"
+                  id="updateTasksValue"
+                  class="updateTasksValue"
+                  value="Update contribution history"
+                />
+              </div>
         </div>
         <br />
         <div class="points">
@@ -107,7 +116,10 @@ async function getContent() {
 }
 
 
-/* Change button hyg*/
+/**
+ * An async function that await the database for a boolean value.
+ * Starts compute on connection to website if compute is true.
+ */
 async function handleChange() {
   const respons = await getDataFromDB();
   compute = respons.compute;
@@ -116,8 +128,7 @@ async function handleChange() {
       w = new Worker("/javascripts/Webworker.js");
       console.log("Worker is computing");
     }
-
-  } else if (compute === false){
+    else if (compute === false){
     console.log("HEJ")
     if (typeof(w) !== "undefined") {
       console.log("Worker is not computing");
@@ -125,7 +136,8 @@ async function handleChange() {
       w = undefined;
     }
   }
-  } 
+  } }
+
 
 /**
  * MAYBE ADD ASYNC TO THIS FUNCTION
@@ -144,6 +156,7 @@ mainDiv.addEventListener("click", (e) => {
     if(e.target.id === "settingsButton") {
       changePageToSettings();
     }})
+
 
 /**
  * An async function that await the database for a boolean value.
@@ -168,7 +181,6 @@ mainDiv.addEventListener("click", async (e) => {
         const responsJson = await respons.json();
         console.log(responsJson.message);
         location.reload()
-
     }
     else
     {
@@ -197,7 +209,7 @@ async function getDataFromDB() {
 
 /**
  * An async function that await the function fetchDataDB() if both boolean is null.
- * @returns tasks_computed, the number of subtasks completed.    OG MULIGVVIS NAVN
+ * @returns tasks_computed, the number of subtasks completed, name of the user.
  */
 async function fetchDataDB() {
   if (tasks_computed === null || compute === null) {
@@ -210,7 +222,7 @@ async function fetchDataDB() {
 }
 
 /**
- * An async fiunction that changes the page to the ettings site.
+ * An async function that changes the page to the settings site.
  */
 async function changePageToSettings() {
   const content = await getContent();
