@@ -75,7 +75,7 @@ input[type="checkbox"] {
   }
 
 
-#changeComputeButton {
+#changeComputeButton, #updateTasksValueButton {
     border: none;
     background: none;
     color: rgb(0, 87, 158);

@@ -93,9 +93,9 @@ async function getContent() {
         Number of subtasks completed: ${tasks_computed}
                 <input
                   type="button"
-                  name="updateTasksValue"
-                  id="updateTasksValue"
-                  class="updateTasksValue"
+                  name="updateTasksValueButton"
+                  id="updateTasksValueButton"
+                  class="updateTasksValueButton"
                   value="Update contribution history"
                 />
               </div>
@@ -114,7 +114,6 @@ async function getContent() {
   
   return content;
 }
-
 
 /**
  * An async function that await the database for a boolean value.
@@ -157,6 +156,30 @@ mainDiv.addEventListener("click", (e) => {
       changePageToSettings();
     }})
 
+/**
+ * Forsøg på at opdatere tasks_computed uden reload page
+ */
+
+mainDiv.addEventListener("click", async (e) => {
+  if (e.target.id === "updateTasksValueButton") {
+    try{
+      console.log("updating tasks value");
+      let respons = await fetch("/worker/updateDB")
+      if(!respons.ok){
+        throw new Error("Error updating tasks value")
+      }
+      const responsJson = await respons.json();
+      tasks_computed = responsJson.tasks_computed;
+      console.log("You have now computed " + tasks_computed); 
+    }
+    catch(err){
+      console.log(err);
+    }
+  } 
+})
+
+
+
 
 /**
  * An async function that await the database for a boolean value.
@@ -181,6 +204,7 @@ mainDiv.addEventListener("click", async (e) => {
         const responsJson = await respons.json();
         console.log(responsJson.message);
         location.reload()
+        
     }
     else
     {
@@ -196,7 +220,6 @@ mainDiv.addEventListener("click", async (e) => {
    * An async function that await the database and extract the data from the database.
    * @returns data, the data from the database.
    */
-
 async function getDataFromDB() {
   let respons = await fetch("/worker/updateDB");
   if (!respons.ok) {
@@ -245,8 +268,7 @@ async function changePageToSettings() {
   
   async function showFrontPage() {
     const content = await getContent();
-    mainDiv.innerHTML = content.VideoStream;
+    mainDiv.innerHTML = content.AccountSettings;
   }
   
   showFrontPage();
-  

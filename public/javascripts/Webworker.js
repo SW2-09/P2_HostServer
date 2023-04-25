@@ -3,7 +3,7 @@ let counter = 0;
 
 // open ws connection and hand  er for "message" events
 async function openWsConnection() {
-  ws = new WebSocket("ws://localhost:3000");
+  ws = new WebSocket("ws://localhost:3443");
   let workerID = Math.floor(Math.random() * 1000);
   ws.addEventListener("message", async (e) => {
     if (e.data === "0") {
