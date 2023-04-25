@@ -48,24 +48,22 @@ workerRoute.post('/register', (req,res) =>{ console.log(req.body)
   let errors = [];
   console.log(req.body)
 
-  //Check required fiels
-  if(!name && !password && !password2) {
-   errors.push({msg: 'Please enter a username and password'});
-  }
-
-  //Require username
-  if(!name) {
-    errors.push({msg: 'Please enter a username'});
-   } 
-
-  //Check password match
-  if(name && password != password2){
-       errors.push({msg: 'Passwords do not match'});
+  if (!name || !password || !password2) {
+    if (!name && !password && !password2) {
+    errors.push({ msg: "Please enter all fields" });
+    } 
+    else if (!name) {
+    errors.push({ msg: "Please enter a name" });
+    } 
+    else if (!password || !password2) {
+    errors.push({ msg: "Please enter a password" });
+    }
+  } else if (password !== password2) {
+  errors.push({ msg: "Passwords do not match" });
   }
 
   //Check if there is an error in the array
   if(errors.length > 0){
-   remember_if_yes
     res.render('register',{
        errors, 
        name,
