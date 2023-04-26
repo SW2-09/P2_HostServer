@@ -1,5 +1,6 @@
 let tasks_computed = null;
 let compute = null;
+let userId = null;
 
 const mainDiv = document.getElementById("mainDiv");
 
@@ -107,15 +108,20 @@ async function getContent() {
 
 /* Change button hyg*/
 async function handleChange() {
-    const respons = await getDataFromDB();
-    compute = respons.compute;
-    if (compute === true) {
-        if (typeof w === "undefined") {
-            w = new Worker("/javascripts/Webworker.js");
-            console.log("Worker is computing");
-        }
-    } else if (compute === false) {
+
+  const respons = await getDataFromDB();
+  compute = respons.compute;
+  userId = respons.userId;
+  if (compute === true) {
+    if (typeof(w) === "undefined") {
+      w = new Worker("/javascripts/Webworker.js");
+      w.postMessage({ compute: compute, userId: userId});
+      console.log("Worker is computing");
+    }
+  } 
+  else if (compute === false) {
         console.log("Worker is not computing");
+
     }
 }
 

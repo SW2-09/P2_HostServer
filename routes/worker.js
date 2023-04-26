@@ -23,6 +23,7 @@ workerRoute.get("/register", checkLoggedIn, (req, res) => {
 });
 
 //get data from DB
+
 workerRoute.get("/updateDB", (req, res) => {
     User.findOne({ name: req.user.name })
         .then((user) => {
@@ -30,6 +31,7 @@ workerRoute.get("/updateDB", (req, res) => {
         })
         .catch((err) => console.log(err));
 });
+
 
 //update compute value
 workerRoute.post("/updateComputeDB", async (req, res) => {
@@ -105,13 +107,15 @@ workerRoute.post("/register", (req, res) => {
                     password2: password2,
                     compute: compute,
                 });
-            } else {
-                const newUser = new User({
-                    name: name,
-                    password: password,
-                    compute: req.body.checkboxYes !== undefined,
-                    tasks_computed: 0,
-                });
+            
+           } else{
+               const newUser = new User ({
+                   name: name,
+                   password: password,
+                   userId: (name + "-" + (Math.floor(Math.random() * 1000))),
+                   compute: req.body.checkboxYes !== undefined,
+                   tasks_computed: 0
+               });
 
                 //Check the hashed password. Default function
                 bcrypt.genSalt(10, (err, salt) => {

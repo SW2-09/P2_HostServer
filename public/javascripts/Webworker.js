@@ -4,38 +4,40 @@ let counter = 0;
 
 // open ws connection and hand  er for "message" events
 async function openWsConnection() {
-    ws = new WebSocket("ws://localhost:3443");
-    let workerID = Math.floor(Math.random() * 1000);
-    ws.addEventListener("message", async (e) => {
-        if (e.data === "0") {
-            console.log("Not work to do, waiting for new jobs");
-            setTimeout(() => {
-                ws.send('{"data": "ready for work"}');
-            }, 10000);
-        } else {
-            console.log(`You recieved task:\n` + e.data);
-            let nextSubtask = JSON.parse(e.data);
 
-            let alg = new Function("A", "B", nextSubtask.alg);
-            let solution;
-            switch (nextSubtask.jobType) {
-                case "matrixMult": {
-                    // let start_comp = Date.now();
-                    solution = alg(
-                        nextSubtask.data,
-                        nextSubtask.commonData.entries
-                    );
-                    // let end_comp = Date.now();
-                    break;
-                }
-                case "plus": {
-                    // let start_comp = Date.now();
-                    solution = alg(nextSubtask.data[0], nextSubtask.data[1]);
-                    // let end_comp = Date.now();
-                    break;
-                }
-
-                default:
+  ws = new WebSocket("ws://localhost:3443");
+  let workerId;
+  onmessage = function(e) {
+    console.log("messagge received from main")
+    console.log(e.data.userId)
+    workerId = e.data.userId;
+  };
+  ws.addEventListener("message", async (e) => {
+    if (e.data === "0") {
+      console.log("Not work to do, waiting for new jobs");
+      setTimeout(() => {
+        ws.send('{"data": "ready for work"}');
+      }, 10000);
+    } else {
+      console.log(`You recieved task:\n` + e.data);
+      let nextSubtask = JSON.parse(e.data);
+      
+      let alg = new Function("A", "B", nextSubtask.alg);
+      let solution;
+      switch (nextSubtask.jobType) {
+        case "matrixMult":{
+          // let start_comp = Date.now();
+          solution = alg(nextSubtask.data, nextSubtask.commonData.entries);
+          // let end_comp = Date.now();
+          break;
+        }
+        case "plus":{
+          // let start_comp = Date.now();
+          solution = alg(nextSubtask.data[0], nextSubtask.data[1]);
+          // let end_comp = Date.now();
+          break;
+        }
+                    default:
                     ws.send('{"data": "ready for work"}');
                     return ws;
             }
@@ -43,15 +45,12 @@ async function openWsConnection() {
             let jobId = nextSubtask.jobId;
             let taskId = nextSubtask.taskId;
 
-            // console.log(`Computation took ${(end_comp - start_comp) / 1000} s`);
-
             let subSolution = {
-                workerID: workerID,
-                jobId: jobId,
-                taskId: taskId,
-                solution: solution,
+              workerId: workerId,
+              jobId: jobId,
+              taskId: taskId,
+              solution: solution,
             };
-
             try {
                 ws.send(JSON.stringify(subSolution));
                 counter++;
@@ -77,6 +76,8 @@ async function openWsConnection() {
 function stopWsConnection(ws) {
     ws.close();
 }
+
+//add event listener to get workerID
 
 // remember_if_yes
 openWsConnection();
