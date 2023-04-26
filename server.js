@@ -10,13 +10,14 @@ const port = 8080;
 import express from "express";
 import expressLayouts from "express-ejs-layouts";
 import mongoose from "mongoose";
+import mongoDBStore from "connect-mongodb-session";
 import passport from "passport";
 import session from "express-session";
 import flash from "connect-flash";
 
 const app = express();
 
-app.use(express.static('public')); // Middleware function that serves static files (e.g. css files) https://expressjs.com/en/starter/static-files.html
+app.use(express.static("public")); // Middleware function that serves static files (e.g. css files) https://expressjs.com/en/starter/static-files.html
 app.use(express.json()); // This allows us to parse json data
 
 //User model
@@ -28,12 +29,20 @@ checkPassport(passport);
 
 //MongoDB Atlas config
 import { MongoURI as db } from "./config/keys.js";
+import { sessionsURI } from "./config/keys.js";
 
 // Connect to MongoDB
-mongoose.connect(db, {useNewUrlParser: true, useUnifiedTopology: true})
-    .then(() => console.log('MongoDB is connected'))
-    .catch(err => console.log(err));
+mongoose
+    .connect(db, { useNewUrlParser: true, useUnifiedTopology: true })
+    .then(() => console.log("MongoDB is connected"))
+    .catch((err) => console.log(err));
 
+//Connect to MongoDB sessions
+const sessiontStore = mongoDBStore(session);
+const store = new sessiontStore({
+    uri: sessionsURI,
+    collection: "Hostserver",
+});
 
 //EJS setup
 app.use(expressLayouts);
@@ -42,29 +51,31 @@ app.use(flash());
 
 //Express session
 app.use(
-  session({
-    secret: 'secret',
-    resave: true,
-    saveUninitialized: true
-  })
+    session({
+        name: "Hostserver",
+        secret: "HostSecret",
+        resave: false,
+        saveUninitialized: true,
+        store: store,
+        cookie: { maxAge: 1000 * 60 * 60 * 24 * 7 }, // 1 week
+    })
 );
 
 //Bodyparser
-app.use(express.urlencoded({extended: false}));
+app.use(express.urlencoded({ extended: false }));
 
 // Passport middleware
-app.use(passport.initialize())
-app.use(passport.session())
+app.use(passport.initialize());
+app.use(passport.session());
 
 //Index page
-import {router as router} from "./routes/index.js"
-app.use('/', router )
-
+import { router as router } from "./routes/index.js";
+app.use("/", router);
 
 //Worker page
 import { workerRoute as workerRoute } from "./routes/worker.js";
-app.use("/worker", workerRoute)
+app.use("/worker", workerRoute);
 
 app.listen(port, () =>
-  console.log(`Server has been started on http://localhost:${port}`)
+    console.log(`Server has been started on http://localhost:${port}`)
 );

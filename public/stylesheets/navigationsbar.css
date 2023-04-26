@@ -1,15 +1,15 @@
-*{
+* {
     padding: 0;
     margin: 0;
     text-decoration: none;
     list-style: none;
-  }
-  
-  body{
-    font-family: 'Courier New', Courier, monospace;
-  }
-  
-  header{
+}
+
+body {
+    font-family: "Courier New", Courier, monospace;
+}
+
+header {
     height: 30%;
     width: 100%;
     background-image: url("../images/blue-background.png");
@@ -18,32 +18,32 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-  }
-  
-  .header_logo{
+}
+
+.header_logo {
     display: flex;
     align-items: center;
     padding-left: 20px;
     height: 100%;
 }
 
-  label.logo{
+label.logo {
     font-size: 28px;
     color: white;
     padding: 0 100px;
     line-height: 80px;
     justify-content: left;
-  }
+}
 
-  .headerItems {
+.headerItems {
     display: flex;
     align-items: center;
     height: 100%;
     padding-right: 20px;
-  }
-  
-  /* Target the Logout link and the user's name link */
-  a[href='/worker/logout'] {
+}
+
+/* Target the Logout link and the user's name link */
+a[href="/worker/logout"] {
     background: none;
     border: none;
     color: white;
@@ -52,14 +52,16 @@
     padding: 0;
     cursor: pointer;
     font-size: 20px;
-  }
+}
 
-  .headerItems > *:not(:last-child){
+.headerItems > *:not(:last-child) {
     margin-right: 75px;
-  }
+}
 
-  /* Style the Settings and Home buttons */
-  #settingsButton, #homeButton, #nameButton {
+/* Style the Settings and Home buttons */
+#settingsButton,
+#homeButton,
+#nameButton {
     border: none;
     background: none;
     color: white;
@@ -70,26 +72,27 @@
     font-size: 20px;
 }
 
-  #homeButton:hover, #settingsButton:hover, a[href='/worker/logout']:hover  {
+#homeButton:hover,
+#settingsButton:hover,
+a[href="/worker/logout"]:hover {
     cursor: pointer;
-    transition: .4s ease-in-out 0.2s;
+    transition: 0.4s ease-in-out 0.2s;
     transform: scale(1.01);
-  }
-
-  /* Style the Settings and Home buttons */
-#nameButton {
-  border: none;
-  background: none;
-  color: white;
-  font-family: inherit;
-  font-size: inherit;
-  padding: 0;
-  font-size: 20px;
-  cursor: default;
 }
-  
-  /* Remove the default focus outline on buttons */
-  button:focus {
+
+/* Style the Settings and Home buttons */
+#nameButton {
+    border: none;
+    background: none;
+    color: white;
+    font-family: inherit;
+    font-size: inherit;
+    padding: 0;
+    font-size: 20px;
+    cursor: default;
+}
+
+/* Remove the default focus outline on buttons */
+button:focus {
     outline: none;
-  }
-  
+}

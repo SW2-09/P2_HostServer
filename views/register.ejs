@@ -1,61 +1,63 @@
-<link rel="stylesheet" href="/stylesheets/register.css">  
+<link rel="stylesheet" href="/stylesheets/register.css" />
 
 <body>
-<div class="register-container">
-  <div class="register-form">
-    <div class="register-header">
-      <h1 class="register-title"><i class=""></i> Register</h1>
-      <%= include ("./partials/messages") %>
+    <div class="register-container">
+        <div class="register-form">
+            <div class="register-header">
+                <h1 class="register-title"><i class=""></i> Register</h1>
+                <%= include ("./partials/messages") %>
+            </div>
+            <form action="/worker/register" method="POST">
+                <div class="form-group">
+                    <label for="name">Username</label>
+                    <input
+                        type="name"
+                        id="name"
+                        name="name"
+                        class="form-control"
+                        placeholder="Enter Username"
+                        value="<%= typeof name != 'undefined' ? name : '' %>"
+                    />
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        class="form-control"
+                        placeholder="Create Password"
+                        value="<%= typeof password != 'undefined' ? password : '' %>"
+                    />
+                </div>
+                <div class="form-group">
+                    <label for="password2">Confirm Password</label>
+                    <input
+                        type="password"
+                        id="password2"
+                        name="password2"
+                        class="form-control"
+                        placeholder="Confirm Password"
+                        value="<%= typeof password2 != 'undefined' ? password2 : '' %>"
+                    />
+                </div>
+                <div class="form-group">
+                    <label for="compute"
+                        >Do you want to compute while watching?</label
+                    >
+                    <br />
+                    Yes
+                    <input
+                        type="checkbox"
+                        id="checkboxYes"
+                        name="checkboxYes"
+                    />
+                </div>
+                <button type="submit" class="register-button">Register</button>
+            </form>
+            <p class="register-link">
+                Have An Account? <a href="/worker/login">Login</a>
+            </p>
+        </div>
     </div>
-    <form action="/worker/register" method="POST">
-      <div class="form-group">
-        <label for="name">Username</label>
-        <input
-          type="name"
-          id="name"
-          name="name"
-          class="form-control"
-          placeholder="Enter Username"
-          value="<%= typeof name != 'undefined' ? name : '' %>"
-        />
-      </div>
-      <div class="form-group">
-        <label for="password">Password</label>
-        <input
-          type="password"
-          id="password"
-          name="password"
-          class="form-control"
-          placeholder="Create Password"
-          value="<%= typeof password != 'undefined' ? password : '' %>"
-        />
-      </div>
-      <div class="form-group">
-        <label for="password2">Confirm Password</label>
-        <input
-          type="password"
-          id="password2"
-          name="password2"
-          class="form-control"
-          placeholder="Confirm Password"
-          value="<%= typeof password2 != 'undefined' ? password2 : '' %>"
-        />
-      </div>
-      <div class="form-group">
-        <label for="compute">Do you want to compute while watching?</label>
-        <br>
-        Yes
-        <input
-            type="checkbox"
-            id="checkboxYes"
-            name="checkboxYes"
-          />         
-      </div>
-      <button type="submit" class="register-button">
-        Register
-      </button>
-    </form>
-    <p class="register-link">Have An Account? <a href="/worker/login">Login</a></p>
-  </div>
-</div>
 </body>

@@ -1,8 +1,10 @@
 let ws;
 let subtasks_completed = 0;
+let counter = 0;
 
 // open ws connection and hand  er for "message" events
 async function openWsConnection() {
+
   ws = new WebSocket("ws://localhost:3443");
   let workerId;
   onmessage = function(e) {
@@ -10,7 +12,7 @@ async function openWsConnection() {
     console.log(e.data.userId)
     workerId = e.data.userId;
   };
-  ws.addEventListener("message", (e) => {
+  ws.addEventListener("message", async (e) => {
     if (e.data === "0") {
       console.log("Not work to do, waiting for new jobs");
       setTimeout(() => {
@@ -35,45 +37,47 @@ async function openWsConnection() {
           // let end_comp = Date.now();
           break;
         }
-      
-        default:
-          ws.send('{"data": "ready for work"}');
-          return ws;
-      }
-      
-      
-      let jobId = nextSubtask.jobId;
-      let taskId = nextSubtask.taskId;
+                    default:
+                    ws.send('{"data": "ready for work"}');
+                    return ws;
+            }
 
-      //FORSØG
-      subtasks_completed++;
-      console.log("KIG HER " + subtasks_completed);
-      subtasks_completed.innerText = subtasks_completed.toString();
+            let jobId = nextSubtask.jobId;
+            let taskId = nextSubtask.taskId;
 
-      // console.log(`Computation took ${(end_comp - start_comp) / 1000} s`);
-
-      let subSolution = {
-        workerId: workerId,
-        jobId: jobId,
-        taskId: taskId,
-        solution: solution,
-      };
-
-      ws.send(JSON.stringify(subSolution));
-      // updateUserTasksComputed();
-      console.log(`A subsolution was send by worker: ${subSolution.workerID}`);
-    }
-  });
-  return ws;
+            let subSolution = {
+              workerId: workerId,
+              jobId: jobId,
+              taskId: taskId,
+              solution: solution,
+            };
+            try {
+                ws.send(JSON.stringify(subSolution));
+                counter++;
+                console.log(
+                    `A subsolution was send by worker: ${subSolution.workerID}`
+                );
+                console.log(counter);
+                const respons = await fetch("/worker/updateTasksComputedDB", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                });
+            } catch (err) {
+                console.log(err);
+            }
+        }
+    });
+    return ws;
 }
 
 // Stops the websocket connection
 function stopWsConnection(ws) {
-  ws.close();
+    ws.close();
 }
 
 //add event listener to get workerID
 
 // remember_if_yes
 openWsConnection();
-
