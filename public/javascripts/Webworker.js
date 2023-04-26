@@ -1,11 +1,12 @@
 let ws;
 let subtasks_completed = 0;
+let counter = 0;
 
 // open ws connection and hand  er for "message" events
-function openWsConnection() {
+async function openWsConnection() {
   ws = new WebSocket("ws://localhost:3443");
   let workerID = Math.floor(Math.random() * 1000);
-  ws.addEventListener("message", (e) => {
+  ws.addEventListener("message", async (e) => {
     if (e.data === "0") {
       console.log("Not work to do, waiting for new jobs");
       setTimeout(() => {
@@ -36,14 +37,8 @@ function openWsConnection() {
           return ws;
       }
       
-      
       let jobId = nextSubtask.jobId;
       let taskId = nextSubtask.taskId;
-
-      //FORSØG
-      subtasks_completed++;
-      console.log("KIG HER " + subtasks_completed);
-      subtasks_completed.innerText = subtasks_completed.toString();
 
       // console.log(`Computation took ${(end_comp - start_comp) / 1000} s`);
 
@@ -53,10 +48,20 @@ function openWsConnection() {
         taskId: taskId,
         solution: solution,
       };
-
-      ws.send(JSON.stringify(subSolution));
-      // updateUserTasksComputed();
-      console.log(`A subsolution was send by worker: ${subSolution.workerID}`);
+    
+        try{
+          ws.send(JSON.stringify(subSolution));
+          counter++
+          console.log(`A subsolution was send by worker: ${subSolution.workerID}`)
+          console.log(counter)
+          const respons = await fetch('/worker/updateTasksComputedDB', {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              }})}
+          catch(err){
+            console.log(err);
+           }
     }
   });
   return ws;
