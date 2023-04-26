@@ -1,13 +1,12 @@
 let tasks_computed = null;
 let compute = null;
 
-
 const mainDiv = document.getElementById("mainDiv");
 
 /**
  * An async function that await the database for a boolean value.
  * Function is a ternary operator that checks if compute is true or false and returns the corresponding html code.
- * @returns content: The HTML pages for the home page and account settings page. 
+ * @returns content: The HTML pages for the home page and account settings page.
  */
 async function getContent() {
   await fetchDataDB();
@@ -111,33 +110,34 @@ async function handleChange() {
   const respons = await getDataFromDB();
   compute = respons.compute;
   if (compute === true) {
-    if (typeof(w) === "undefined") {
+    if (typeof w === "undefined") {
       w = new Worker("/javascripts/Webworker.js");
       console.log("Worker is computing");
     }
-
-  } else if (compute === false){
+  } else if (compute === false) {
     console.log("Worker is not computing");
   }
-  } 
+}
 
 /**
  * MAYBE ADD ASYNC TO THIS FUNCTION
  * An event listener that run enchangePageToHome() when a button is clicked.
  */
 mainDiv.addEventListener("click", (e) => {
-  if(e.target.id === "homeButton") {
+  if (e.target.id === "homeButton") {
     changePageToHome();
-  }})
+  }
+});
 
-  /**
+/**
  * MAYBE ADD ASYNC TO THIS FUNCTION
  * An event listener that run enchangePageToSettings() when a button is clicked.
  */
 mainDiv.addEventListener("click", (e) => {
-    if(e.target.id === "settingsButton") {
-      changePageToSettings();
-    }})
+  if (e.target.id === "settingsButton") {
+    changePageToSettings();
+  }
+});
 
 /**
  * An async function that await the database for a boolean value.
@@ -146,39 +146,39 @@ mainDiv.addEventListener("click", (e) => {
  */
 mainDiv.addEventListener("click", async (e) => {
   if (e.target.id === "changeComputeButton") {
-    if(confirm("Are you sure you want to change your subscription details?") === false) return;
-    try{
+    if (
+      confirm("Are you sure you want to change your subscription details?") ===
+      false
+    )
+      return;
+    try {
       console.log("changing compute value");
       await fetchDataDB();
       const respons = await fetch("/worker/updateComputeDB", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ compute: compute }),
-    });
-    
-    if(respons.status === 200)
-    {  
+        },
+        body: JSON.stringify({ compute: compute }),
+      });
+
+      if (respons.status === 200) {
         const responsJson = await respons.json();
         console.log(responsJson.message);
-        location.reload()
-
-    }
-    else
-    {
+        location.reload();
+      } else {
         console.log("Error");
-    }
-    }
-    catch(err){
+      }
+    } catch (err) {
       console.log(err);
-    } 
-  }})
+    }
+  }
+});
 
-  /**
-   * An async function that await the database and extract the data from the database.
-   * @returns data, the data from the database.
-   */
+/**
+ * An async function that await the database and extract the data from the database.
+ * @returns data, the data from the database.
+ */
 
 async function getDataFromDB() {
   let respons = await fetch("/worker/updateDB");
@@ -199,7 +199,7 @@ async function fetchDataDB() {
     const respons = await getDataFromDB();
     tasks_computed = respons.tasks_computed;
     compute = respons.compute;
-    name = respons.name
+    name = respons.name;
   }
   return { tasks_computed, compute, name };
 }
@@ -209,8 +209,8 @@ async function fetchDataDB() {
  */
 async function changePageToSettings() {
   const content = await getContent();
-  if (mainDiv.innerHTML = content.VideoStream) {
-    console.log('changing page to settings');
+  if ((mainDiv.innerHTML = content.VideoStream)) {
+    console.log("changing page to settings");
     mainDiv.innerHTML = content.AccountSettings;
   }
 }
@@ -218,18 +218,17 @@ async function changePageToSettings() {
 /**
  * An async function that changes the page to the home site.
  */
-  async function changePageToHome() {
-    const content = await getContent();
-    if (mainDiv.innerHTML = content.AccountSettings) {
-      console.log("changing page to home")
-      mainDiv.innerHTML = content.VideoStream;
-    }
-  }  
-  
-  async function showFrontPage() {
-    const content = await getContent();
-    mainDiv.innerHTML = content.AccountSettings;
+async function changePageToHome() {
+  const content = await getContent();
+  if ((mainDiv.innerHTML = content.AccountSettings)) {
+    console.log("changing page to home");
+    mainDiv.innerHTML = content.VideoStream;
   }
-  
-  showFrontPage();
-  
+}
+
+async function showFrontPage() {
+  const content = await getContent();
+  mainDiv.innerHTML = content.AccountSettings;
+}
+
+showFrontPage();

@@ -15,28 +15,28 @@ async function openWsConnection() {
     } else {
       console.log(`You recieved task:\n` + e.data);
       let nextSubtask = JSON.parse(e.data);
-      
+
       let alg = new Function("A", "B", nextSubtask.alg);
       let solution;
       switch (nextSubtask.jobType) {
-        case "matrixMult":{
+        case "matrixMult": {
           // let start_comp = Date.now();
           solution = alg(nextSubtask.data, nextSubtask.commonData.entries);
           // let end_comp = Date.now();
           break;
         }
-        case "plus":{
+        case "plus": {
           // let start_comp = Date.now();
           solution = alg(nextSubtask.data[0], nextSubtask.data[1]);
           // let end_comp = Date.now();
           break;
         }
-      
+
         default:
           ws.send('{"data": "ready for work"}');
           return ws;
       }
-      
+
       let jobId = nextSubtask.jobId;
       let taskId = nextSubtask.taskId;
 
@@ -48,20 +48,23 @@ async function openWsConnection() {
         taskId: taskId,
         solution: solution,
       };
-    
-        try{
-          ws.send(JSON.stringify(subSolution));
-          counter++
-          console.log(`A subsolution was send by worker: ${subSolution.workerID}`)
-          console.log(counter)
-          const respons = await fetch('/worker/updateTasksComputedDB', {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              }})}
-          catch(err){
-            console.log(err);
-           }
+
+      try {
+        ws.send(JSON.stringify(subSolution));
+        counter++;
+        console.log(
+          `A subsolution was send by worker: ${subSolution.workerID}`
+        );
+        console.log(counter);
+        const respons = await fetch("/worker/updateTasksComputedDB", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+      } catch (err) {
+        console.log(err);
+      }
     }
   });
   return ws;
@@ -74,4 +77,3 @@ function stopWsConnection(ws) {
 
 // remember_if_yes
 openWsConnection();
-
