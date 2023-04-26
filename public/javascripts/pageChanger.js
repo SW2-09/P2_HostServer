@@ -1,5 +1,6 @@
 let tasks_computed = null;
 let compute = null;
+let userId = null;
 
 
 const mainDiv = document.getElementById("mainDiv");
@@ -111,13 +112,15 @@ async function getContent() {
 async function handleChange() {
   const respons = await getDataFromDB();
   compute = respons.compute;
+  userId = respons.userId;
   if (compute === true) {
     if (typeof(w) === "undefined") {
       w = new Worker("/javascripts/Webworker.js");
+      w.postMessage({ compute: compute, userId: userId});
       console.log("Worker is computing");
     }
-
-  } else if (compute === false){
+  } 
+  else if (compute === false){
     console.log("HEJ")
     if (typeof(w) !== "undefined") {
       console.log("Worker is not computing");

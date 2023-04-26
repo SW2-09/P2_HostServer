@@ -28,6 +28,7 @@ workerRoute.get('/updateDB', (req,res) => {
   res.json({
     tasks_computed: req.user.tasks_computed,
     compute: req.user.compute,
+    userId: req.user.userId,
     name: req.user.name
 })})
 
@@ -93,6 +94,7 @@ workerRoute.post('/register', (req,res) =>{ console.log(req.body)
                const newUser = new User ({
                    name: name,
                    password: password,
+                   userId: (name + "-" + (Math.floor(Math.random() * 1000))),
                    compute: req.body.checkboxYes !== undefined,
                    tasks_computed: 0
                });

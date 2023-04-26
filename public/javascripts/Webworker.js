@@ -2,9 +2,14 @@ let ws;
 let subtasks_completed = 0;
 
 // open ws connection and hand  er for "message" events
-function openWsConnection() {
+async function openWsConnection() {
   ws = new WebSocket("ws://localhost:3443");
-  let workerID = Math.floor(Math.random() * 1000);
+  let workerId;
+  onmessage = function(e) {
+    console.log("messagge received from main")
+    console.log(e.data.userId)
+    workerId = e.data.userId;
+  };
   ws.addEventListener("message", (e) => {
     if (e.data === "0") {
       console.log("Not work to do, waiting for new jobs");
@@ -48,7 +53,7 @@ function openWsConnection() {
       // console.log(`Computation took ${(end_comp - start_comp) / 1000} s`);
 
       let subSolution = {
-        workerID: workerID,
+        workerId: workerId,
         jobId: jobId,
         taskId: taskId,
         solution: solution,
@@ -66,6 +71,8 @@ function openWsConnection() {
 function stopWsConnection(ws) {
   ws.close();
 }
+
+//add event listener to get workerID
 
 // remember_if_yes
 openWsConnection();
