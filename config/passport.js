@@ -10,7 +10,7 @@ import { User } from '../models/User.js';
 //Taken from passport website 
 function checkPassport(passport) {
     passport.use(
-        new localStrategy({passReqToCallback : true,  usernameField: 'name'}, (req, name, password, done) =>{
+        new localStrategy({passReqToCallback : true, usernameField: 'name'}, (req, name, password, done) =>{
             //Match User
             User.findOne({name: name})
             .then(user => {

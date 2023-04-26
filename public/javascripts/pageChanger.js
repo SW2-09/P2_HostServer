@@ -33,7 +33,6 @@ async function getContent() {
           ></iframe>
         </div>
       </div>
-
   `,
 
     AccountSettings: `
@@ -49,10 +48,11 @@ async function getContent() {
       </div>
     </header>
 
+
+      <div class="userinfo">
+         <h2>Account Settings</h2>
+      </div>
       <div class="right">
-        <div class="userinfo">
-          <h2>Account Settings</h2>
-        </div>
         <div class="compute">
           <div class="header">
             <h3>Subscription details</h3>
@@ -102,10 +102,9 @@ async function getContent() {
     </div>
   `,
   };
-  
+
   return content;
 }
-
 
 /* Change button hyg*/
 async function handleChange() {
@@ -118,12 +117,7 @@ async function handleChange() {
     }
 
   } else if (compute === false){
-    console.log("HEJ")
-    if (typeof(w) !== "undefined") {
-      console.log("Worker is not computing");
-      w.terminate();
-      w = undefined;
-    }
+    console.log("Worker is not computing");
   }
   } 
 
@@ -155,6 +149,7 @@ mainDiv.addEventListener("click", async (e) => {
     if(confirm("Are you sure you want to change your subscription details?") === false) return;
     try{
       console.log("changing compute value");
+      await fetchDataDB();
       const respons = await fetch("/worker/updateComputeDB", {
         method: "POST",
         headers: {
@@ -233,7 +228,7 @@ async function changePageToSettings() {
   
   async function showFrontPage() {
     const content = await getContent();
-    mainDiv.innerHTML = content.VideoStream;
+    mainDiv.innerHTML = content.AccountSettings;
   }
   
   showFrontPage();

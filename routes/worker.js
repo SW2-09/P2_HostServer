@@ -25,25 +25,42 @@ workerRoute.get('/register', checkLoggedIn,(req,res) => {
 
 //get data from DB
 workerRoute.get('/updateDB', (req,res) => {
-  res.json({
-    tasks_computed: req.user.tasks_computed,
-    compute: req.user.compute,
-    name: req.user.name
-})})
+  User.findOne({name: req.user.name})
+  .then(user =>{
+    res.json(user)
+  })
+  .catch(err => console.log(err))
+})
+
 
 //update compute value
 workerRoute.post('/updateComputeDB', async (req,res) => {
-  try {
-    await User.findOneAndUpdate({name: req.user.name}, {$set: {compute: !req.user.compute}})
+  User.findOneAndUpdate({name: req.user.name}, {$set: {compute: !req.user.compute}})
+  .then(user => {
     res.json({message: "compute value changed"})
-  } catch (err) {
+  })
+  .catch(err => {
     console.error(err)
     res.status(500).json({message: "Error updating compute value"})
-  }
+  })
 })
 
+//update tasks_computed value
+workerRoute.post('/updateTasksComputedDB', async (req,res) => {
+  User.findOneAndUpdate({name: req.user.name}, {$inc: {tasks_computed: 1}})
+  .then(user => {
+    res.json({message: "tasks_computed value changed"})
+  })
+  .catch(err => {
+    console.error(err)
+    res.status(500).json({message: "Error updating tasks_computed value"})
+  })
+})
+
+
 //register handle
-workerRoute.post('/register', (req,res) =>{ console.log(req.body)
+workerRoute.post('/register', (req,res) =>{ 
+  console.log(req.body)
   const {name, password, password2, compute} = req.body;
   let errors = [];
   console.log(req.body)
