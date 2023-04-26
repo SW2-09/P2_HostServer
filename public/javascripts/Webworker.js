@@ -7,11 +7,13 @@ async function openWsConnection() {
 
   ws = new WebSocket("ws://localhost:3443");
   let workerId;
-  onmessage = function(e) {
+  onmessage = async function(e) {
     console.log("messagge received from main")
     console.log(e.data.userId)
     workerId = e.data.userId;
   };
+
+
   ws.addEventListener("message", async (e) => {
     if (e.data === "0") {
       console.log("Not work to do, waiting for new jobs");
@@ -59,12 +61,12 @@ async function openWsConnection() {
                     `A subsolution was send by worker: ${subSolution.workerID}`
                 );
                 console.log(counter);
-                const respons = await fetch("/worker/updateTasksComputedDB", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                });
+                // const respons = await fetch("/worker/updateTasksComputedDB", {
+                //     method: "POST",
+                //     headers: {
+                //         "Content-Type": "application/json",
+                //     },
+                // });
             } catch (err) {
                 console.log(err);
             }
