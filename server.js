@@ -33,15 +33,15 @@ import { sessionsURI } from "./config/keys.js";
 
 // Connect to MongoDB
 mongoose
-  .connect(db, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => console.log("MongoDB is connected"))
-  .catch((err) => console.log(err));
+    .connect(db, { useNewUrlParser: true, useUnifiedTopology: true })
+    .then(() => console.log("MongoDB is connected"))
+    .catch((err) => console.log(err));
 
 //Connect to MongoDB sessions
 const sessiontStore = mongoDBStore(session);
 const store = new sessiontStore({
-  uri: sessionsURI,
-  collection: "Hostserver",
+    uri: sessionsURI,
+    collection: "Hostserver",
 });
 
 //EJS setup
@@ -51,14 +51,14 @@ app.use(flash());
 
 //Express session
 app.use(
-  session({
-    name: "Hostserver",
-    secret: "HostSecret",
-    resave: false,
-    saveUninitialized: true,
-    store: store,
-    cookie: { maxAge: 1000 * 60 * 60 * 24 * 7 }, // 1 week
-  })
+    session({
+        name: "Hostserver",
+        secret: "HostSecret",
+        resave: false,
+        saveUninitialized: true,
+        store: store,
+        cookie: { maxAge: 1000 * 60 * 60 * 24 * 7 }, // 1 week
+    })
 );
 
 //Bodyparser
@@ -77,5 +77,5 @@ import { workerRoute as workerRoute } from "./routes/worker.js";
 app.use("/worker", workerRoute);
 
 app.listen(port, () =>
-  console.log(`Server has been started on http://localhost:${port}`)
+    console.log(`Server has been started on http://localhost:${port}`)
 );

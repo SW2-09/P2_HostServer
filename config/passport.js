@@ -9,43 +9,55 @@ import { User } from "../models/User.js";
 
 //Taken from passport website
 function checkPassport(passport) {
-  passport.use(
-    new localStrategy(
-      { passReqToCallback: true, usernameField: "name" },
-      (req, name, password, done) => {
-        //Match User
-        User.findOne({ name: name })
-          .then((user) => {
-            if (!user) {
-              return done(null, false, req.flash("error", "User not found"));
+    passport.use(
+        new localStrategy(
+            { passReqToCallback: true, usernameField: "name" },
+            (req, name, password, done) => {
+                //Match User
+                User.findOne({ name: name })
+                    .then((user) => {
+                        if (!user) {
+                            return done(
+                                null,
+                                false,
+                                req.flash("error", "User not found")
+                            );
+                        }
+
+                        //Match password
+                        bcrypt.compare(
+                            password,
+                            user.password,
+                            (err, isMatch) => {
+                                if (err) throw err;
+                                if (isMatch) {
+                                    return done(null, user);
+                                } else {
+                                    return done(
+                                        null,
+                                        false,
+                                        req.flash("error", "Wrong password")
+                                    );
+                                }
+                            }
+                        );
+                    })
+                    .catch((err) => console.log(err));
             }
+        )
+    );
 
-            //Match password
-            bcrypt.compare(password, user.password, (err, isMatch) => {
-              if (err) throw err;
-              if (isMatch) {
-                return done(null, user);
-              } else {
-                return done(null, false, req.flash("error", "Wrong password"));
-              }
-            });
-          })
-          .catch((err) => console.log(err));
-      }
-    )
-  );
+    //Taken from passport website
+    passport.serializeUser((user, done) => {
+        done(null, user.id);
+    });
 
-  //Taken from passport website
-  passport.serializeUser((user, done) => {
-    done(null, user.id);
-  });
-
-  passport.deserializeUser(async (id, done) => {
-    try {
-      const user = await User.findById(id);
-      done(null, user);
-    } catch (err) {
-      done(err);
-    }
-  });
+    passport.deserializeUser(async (id, done) => {
+        try {
+            const user = await User.findById(id);
+            done(null, user);
+        } catch (err) {
+            done(err);
+        }
+    });
 }
