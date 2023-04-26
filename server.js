@@ -10,6 +10,7 @@ const port = 8080;
 import express from "express";
 import expressLayouts from "express-ejs-layouts";
 import mongoose from "mongoose";
+import mongoDBStore from "connect-mongodb-session";
 import passport from "passport";
 import session from "express-session";
 import flash from "connect-flash";
@@ -28,12 +29,19 @@ checkPassport(passport);
 
 //MongoDB Atlas config
 import { MongoURI as db } from "./config/keys.js";
+import { sessionsURI } from "./config/keys.js";
 
 // Connect to MongoDB
 mongoose.connect(db, {useNewUrlParser: true, useUnifiedTopology: true})
     .then(() => console.log('MongoDB is connected'))
     .catch(err => console.log(err));
 
+//Connect to MongoDB sessions
+const sessiontStore = mongoDBStore(session);
+const store = new sessiontStore({
+  uri: sessionsURI,
+  collection: "Hostserver",
+});
 
 //EJS setup
 app.use(expressLayouts);
@@ -43,9 +51,12 @@ app.use(flash());
 //Express session
 app.use(
   session({
-    secret: 'secret',
-    resave: false,
-    saveUninitialized: true, 
+    name: "Hostserver",
+    secret: "HostSecret", 
+    resave: false, 
+    saveUninitialized: true,
+    store: store,
+    cookie: { maxAge: 1000 * 60 * 60 * 24 * 7 }, // 1 week
   })
 );
 
