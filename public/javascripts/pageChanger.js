@@ -19,8 +19,8 @@ async function getContent() {
       </div>
       <div class="headerItems">
         <button id="settingsButton" > Settings </button>
-        <button id="nameButton"> ${name} </button>
         <a href="/worker/logout" class="">Logout</a>
+        <button id="nameButton"> ${name} </button>
       </div>
     </header>
       <div class="left">
@@ -43,12 +43,10 @@ async function getContent() {
       </div>
       <div class="headerItems">
         <button id="homeButton" > Home </button>
-        <button id="nameButton"> ${name} </button>
         <a href="/worker/logout" class="">Logout</a>
+        <button id="nameButton"> ${name} </button>
       </div>
     </header>
-
-
       <div class="userinfo">
          <h2>Account Settings</h2>
       </div>
@@ -89,14 +87,28 @@ async function getContent() {
           <div class="header">
             <h3>Contribute History</h3>
           </div>
-          Number of subtasks completed: ${tasks_computed}
+          Number of subtasks completed: <span id ="subtasksValue"> ${tasks_computed} </span>
+          <input
+          type="button"
+          name="updateTasksValueButton"
+          id="updateTasksValueButton"
+          class="updateTasksValueButton"
+          value="Update contribution history"
+        />
         </div>
         <br />
         <div class="points">
           <div class="header">
             <h3>Points</h3>
           </div>
-          Points obtained: <span id="pointsObtained">0</span>
+          Points obtained: <span id ="pointsValue"> ${tasks_computed} </span> 
+          <input
+          type="button"
+          name="pointsValueButton"
+          id="pointsValueButton"
+          class="pointsValueButton"
+          value="Update points obtained"
+        />
         </div>
       </div>
     </div>
@@ -106,7 +118,10 @@ async function getContent() {
     return content;
 }
 
-/* Change button hyg*/
+/**
+ * An async function that await the database for a boolean value.
+ * Starts computing if the boolean value is true on reload page.
+ */
 async function handleChange() {
 
   const respons = await getDataFromDB();
@@ -124,6 +139,64 @@ async function handleChange() {
 
     }
 }
+
+/** */
+
+function updateTextTasksComputed(subtasksValue, tasks_computed) {
+    const element = document.getElementById("subtasksValue");
+    if (subtasksValue) {
+        element.textContent = tasks_computed;
+    }
+}
+
+function updateTextPoints(pointsValue, tasks_computed) {
+    const element = document.getElementById("pointsValue");
+    if (pointsValue) {
+        element.textContent = tasks_computed;
+    }
+}
+
+/**
+ * an async event listener that updates the computed tasks shown on screen
+ */
+mainDiv.addEventListener("click", async (e) => {
+    if (e.target.id === "updateTasksValueButton") {
+        try {
+            console.log("updating tasks value");
+            let respons = await fetch("/worker/updateDB");
+            if (!respons.ok) {
+                throw new Error("Error updating tasks value");
+            }
+            const responsJson = await respons.json();
+            tasks_computed = responsJson.tasks_computed;
+            console.log("You have now computed " + tasks_computed);
+            updateTextTasksComputed("subtasksValue", tasks_computed);
+        } catch (err) {
+            console.log(err);
+        }
+    }
+});
+
+/**
+ * An event listener that that updates the points obtained shown on screen
+ */
+mainDiv.addEventListener("click", async (e) => {
+    if (e.target.id === "pointsValueButton") {
+        try {
+            console.log("updating points obtained");
+            let respons = await fetch("/worker/updateDB");
+            if (!respons.ok) {
+                throw new Error("Error updating points obtained");
+            }
+            const responsJson = await respons.json();
+            tasks_computed = responsJson.tasks_computed;
+            console.log("You have now obtained " + tasks_computed);
+            updateTextPoints("pointsValue", tasks_computed);
+        } catch (err) {
+            console.log(err);
+        }
+    }
+});
 
 /**
  * MAYBE ADD ASYNC TO THIS FUNCTION

@@ -77,7 +77,9 @@
     width: 100%;
 }
 
-#changeComputeButton {
+#pointsValueButton,
+#changeComputeButton,
+#updateTasksValueButton {
     border: none;
     background: none;
     color: rgb(0, 87, 158);
@@ -86,7 +88,14 @@
     font-size: large;
     cursor: pointer;
 }
-
+#pointsValueButton:hover,
+#updateTasksValueButton:hover,
 #changeComputeButton:hover {
     text-decoration: underline;
+}
+
+#pointsValueButton:active,
+#updateTasksValueButton:active,
+#changeComputeButton:active {
+    color: rgb(0, 62, 113);
 }
