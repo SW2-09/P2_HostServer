@@ -3,6 +3,7 @@ export { workerRoute };
 import express from "express";
 import passport from "passport";
 import bcrypt from "bcryptjs";
+import { sanitize } from "../config/utility.js";
 
 const workerRoute = express.Router();
 
@@ -25,7 +26,8 @@ workerRoute.get("/register", checkLoggedIn, (req, res) => {
 //get data from DB
 
 workerRoute.get("/updateDB", (req, res) => {
-    User.findOne({ name: req.user.name })
+    const name = sanitize(req.user.name);
+    User.findOne({ name: name })
         .then((user) => {
             res.json(user);
         })
@@ -35,8 +37,9 @@ workerRoute.get("/updateDB", (req, res) => {
 
 //update compute value
 workerRoute.post("/updateComputeDB", async (req, res) => {
+    const name = sanitize(req.user.name);
     User.findOneAndUpdate(
-        { name: req.user.name },
+        { name: name },
         { $set: { compute: !req.user.compute } }
     )
         .then((user) => {
@@ -50,8 +53,9 @@ workerRoute.post("/updateComputeDB", async (req, res) => {
 
 //update tasks_computed value
 workerRoute.post("/updateTasksComputedDB", async (req, res) => {
+    const name = sanitize(req.user.name);
     User.findOneAndUpdate(
-        { name: req.user.name },
+        { name: name },
         { $inc: { tasks_computed: 1 } }
     )
         .then((user) => {
@@ -67,8 +71,12 @@ workerRoute.post("/updateTasksComputedDB", async (req, res) => {
 
 //register handle
 workerRoute.post("/register", (req, res) => {
+    
     console.log(req.body);
-    const { name, password, password2, compute } = req.body;
+    const name = sanitize(req.body.name);
+    const password = req.body.password;
+    const password2 = req.body.password2;
+    const compute = req.body.compute;
     let errors = [];
     console.log(req.body);
 
