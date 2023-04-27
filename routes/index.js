@@ -2,7 +2,6 @@ export { router };
 
 import express from "express";
 import passport from "passport";
-import { sanitize } from "../config/utility.js";
 import {
     ensureAuthenticated,
     checkLoggedIn,
@@ -15,9 +14,8 @@ router.get("/", checkLoggedIn, (req, res) => {
 });
 
 router.get("/worker", ensureAuthenticated, (req, res) => {
-    const name = sanitize(req.user.name);
     res.render("worker", {
-        name: name,
+        name: req.user.name,
         tasks_computed: req.user.tasks_computed,
         compute: req.user.compute,
     });
