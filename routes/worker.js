@@ -25,7 +25,7 @@ workerRoute.get("/register", checkLoggedIn, (req, res) => {
 
 //get data from DB
 
-workerRoute.get("/updateDB", (req, res) => {
+workerRoute.get("/updateDB", async (req, res) => {
     const name = sanitize(req.user.name);
     User.findOne({ name: name })
         .then((user) => {
@@ -33,7 +33,6 @@ workerRoute.get("/updateDB", (req, res) => {
         })
         .catch((err) => console.log(err));
 });
-
 
 //update compute value
 workerRoute.post("/updateComputeDB", async (req, res) => {
@@ -54,10 +53,7 @@ workerRoute.post("/updateComputeDB", async (req, res) => {
 //update tasks_computed value
 workerRoute.post("/updateTasksComputedDB", async (req, res) => {
     const name = sanitize(req.user.name);
-    User.findOneAndUpdate(
-        { name: name },
-        { $inc: { tasks_computed: 1 } }
-    )
+    User.findOneAndUpdate({ name: name }, { $inc: { tasks_computed: 1 } })
         .then((user) => {
             res.json({ message: "tasks_computed value changed" });
         })
@@ -76,7 +72,7 @@ workerRoute.post("/register", (req, res) => {
     const password = sanitize(req.body.password);
     const password2 = sanitize(req.body.password2);
     const compute = req.body.compute;
-    
+
     let errors = [];
     console.log(req.body);
 
@@ -112,15 +108,14 @@ workerRoute.post("/register", (req, res) => {
                     password2: password2,
                     compute: compute,
                 });
-            
-           } else{
-               const newUser = new User ({
-                   name: name,
-                   password: password,
-                   userId: (name + "-" + (Math.floor(Math.random() * 1000))),
-                   compute: req.body.checkboxYes !== undefined,
-                   tasks_computed: 0
-               });
+            } else {
+                const newUser = new User({
+                    name: name,
+                    password: password,
+                    userId: name + "-" + Math.floor(Math.random() * 1000),
+                    compute: req.body.checkboxYes !== undefined,
+                    tasks_computed: 0,
+                });
 
                 //Check the hashed password. Default function
                 bcrypt.genSalt(10, (err, salt) => {
@@ -144,7 +139,7 @@ workerRoute.post("/register", (req, res) => {
 workerRoute.post("/login", (req, res, next) => {
     const name = sanitize(req.body.name);
     console.log(req.body);
-    console.log(name)
+    console.log(name);
     passport.authenticate("local", {
         failureFlash: true,
         successRedirect: "/worker",
@@ -153,7 +148,7 @@ workerRoute.post("/login", (req, res, next) => {
 });
 
 //Logout handle
-workerRoute.get("/logout", (req, res) => {
+workerRoute.get("/logout", async (req, res) => {
     req.logout((err) => {
         if (err) {
             return next(err);

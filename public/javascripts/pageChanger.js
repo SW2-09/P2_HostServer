@@ -19,7 +19,7 @@ async function getContent() {
       </div>
       <div class="headerItems">
         <button id="settingsButton" > Settings </button>
-        <a href="/worker/logout" class="">Logout</a>
+        <button id="logoutButton" > Logout </button>
         <button id="nameButton"> ${name} </button>
       </div>
     </header>
@@ -43,7 +43,7 @@ async function getContent() {
       </div>
       <div class="headerItems">
         <button id="homeButton" > Home </button>
-        <a href="/worker/logout" class="">Logout</a>
+        <button id="logoutButton" > Logout </button>
         <button id="nameButton"> ${name} </button>
       </div>
     </header>
@@ -123,24 +123,23 @@ async function getContent() {
  * Starts computing if the boolean value is true on reload page.
  */
 async function handleChange() {
-
-  const respons = await getDataFromDB();
-  compute = respons.compute;
-  userId = respons.userId;
-  if (compute === true) {
-    if (typeof(w) === "undefined") {
-      w = new Worker("/javascripts/Webworker.js");
-      w.postMessage({ compute: compute, userId: userId});
-      console.log("Worker is computing");
-    }
-  } 
-  else if (compute === false) {
+    const respons = await getDataFromDB();
+    compute = respons.compute;
+    userId = respons.userId;
+    if (compute === true) {
+        if (typeof w === "undefined") {
+            w = new Worker("/javascripts/Webworker.js");
+            w.postMessage({ compute: compute, userId: userId });
+            console.log("Worker is computing");
+        }
+    } else if (compute === false) {
         console.log("Worker is not computing");
-
     }
 }
 
-/** */
+/**
+ *
+ */
 
 function updateTextTasksComputed(subtasksValue, tasks_computed) {
     const element = document.getElementById("subtasksValue");
@@ -149,6 +148,10 @@ function updateTextTasksComputed(subtasksValue, tasks_computed) {
     }
 }
 
+/**
+ *
+ *
+ */
 function updateTextPoints(pointsValue, tasks_computed) {
     const element = document.getElementById("pointsValue");
     if (pointsValue) {
@@ -156,10 +159,10 @@ function updateTextPoints(pointsValue, tasks_computed) {
     }
 }
 
-/**
- * an async event listener that updates the computed tasks shown on screen
- */
 mainDiv.addEventListener("click", async (e) => {
+    /**
+     * updates the computed tasks shown on screen
+     */
     if (e.target.id === "updateTasksValueButton") {
         try {
             console.log("updating tasks value");
@@ -175,12 +178,10 @@ mainDiv.addEventListener("click", async (e) => {
             console.log(err);
         }
     }
-});
 
-/**
- * An event listener that that updates the points obtained shown on screen
- */
-mainDiv.addEventListener("click", async (e) => {
+    /**
+     * updates the points obtained shown on screen
+     */
     if (e.target.id === "pointsValueButton") {
         try {
             console.log("updating points obtained");
@@ -196,34 +197,36 @@ mainDiv.addEventListener("click", async (e) => {
             console.log(err);
         }
     }
-});
 
-/**
- * MAYBE ADD ASYNC TO THIS FUNCTION
- * An event listener that run enchangePageToHome() when a button is clicked.
- */
-mainDiv.addEventListener("click", (e) => {
-    if (e.target.id === "homeButton") {
-        changePageToHome();
+    /**
+     * logout button
+     */
+    if (e.target.id === "logoutButton") {
+        try {
+            if (typeof w !== "undefined") {
+                w.terminate();
+                console.log("Worker is terminated");
+            }
+        } catch (err) {
+            console.log(err);
+        }
+
+        try {
+            const respons = await fetch("/worker/logout");
+            if (!respons.ok) {
+                throw new Error("Error logging out");
+            }
+            if (respons.status === 200) {
+                window.location.href = "/";
+            }
+        } catch (err) {
+            console.log(err);
+        }
     }
-});
 
-/**
- * MAYBE ADD ASYNC TO THIS FUNCTION
- * An event listener that run enchangePageToSettings() when a button is clicked.
- */
-mainDiv.addEventListener("click", (e) => {
-    if (e.target.id === "settingsButton") {
-        changePageToSettings();
-    }
-});
-
-/**
- * An async function that await the database for a boolean value.
- * Function then checks if the boolean value is true or false and change the value to the opposite.
- * Function then sends the new value to the database.
- */
-mainDiv.addEventListener("click", async (e) => {
+    /**
+     * change compute value in DB
+     * */
     if (e.target.id === "changeComputeButton") {
         if (
             confirm(
@@ -253,13 +256,25 @@ mainDiv.addEventListener("click", async (e) => {
             console.log(err);
         }
     }
+
+    /**
+     * changePageToSettings
+     */
+    if (e.target.id === "settingsButton") {
+        changePageToSettings();
+    }
+
+    /**
+     * home button
+     * */
+    if (e.target.id === "homeButton") {
+        changePageToHome();
+    }
 });
 
 /**
- * An async function that await the database and extract the data from the database.
- * @returns data, the data from the database.
+ * An async function that fetches data from the database.
  */
-
 async function getDataFromDB() {
     let respons = await fetch("/worker/updateDB");
     if (!respons.ok) {
