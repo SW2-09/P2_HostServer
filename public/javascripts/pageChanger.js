@@ -18,7 +18,7 @@ async function getContent() {
       </div>
       <div class="headerItems">
         <button id="settingsButton" > Settings </button>
-        <a href="/worker/logout" class="">Logout</a>
+        <button id="logoutButton" > Logout </button>
         <button id="nameButton"> ${name} </button>
       </div>
     </header>
@@ -42,7 +42,7 @@ async function getContent() {
       </div>
       <div class="headerItems">
         <button id="homeButton" > Home </button>
-        <a href="/worker/logout" class="">Logout</a>
+        <button id="logoutButton" > Logout </button>
         <button id="nameButton"> ${name} </button>
       </div>
     </header>
@@ -165,6 +165,32 @@ mainDiv.addEventListener("click", async (e) => {
             tasks_computed = responsJson.tasks_computed;
             console.log("You have now computed " + tasks_computed);
             updateTextTasksComputed("subtasksValue", tasks_computed);
+        } catch (err) {
+            console.log(err);
+        }
+    }
+});
+
+/**
+ * logout button
+ */
+mainDiv.addEventListener("click", async (e) => {
+    if (e.target.id === "logoutButton") {
+        try {
+            if (typeof w !== "undefined") {
+                w.terminate();
+                console.log("Worker is terminated");
+            }
+        } catch (err) {
+            console.log(err);
+        }
+
+        try {
+            const respons = await fetch("/worker/logout");
+            if (!respons.ok) {
+                throw new Error("Error logging out");
+            }
+            location.reload();
         } catch (err) {
             console.log(err);
         }

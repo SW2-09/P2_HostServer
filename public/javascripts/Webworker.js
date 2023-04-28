@@ -1,11 +1,11 @@
 let ws;
-let subtasks_completed = 0;
 let counter = 0;
 
 // open ws connection and hand  er for "message" events
 async function openWsConnection() {
     ws = new WebSocket("ws://localhost:3443");
     let workerID = Math.floor(Math.random() * 1000);
+
     ws.addEventListener("message", async (e) => {
         if (e.data === "0") {
             console.log("Not work to do, waiting for new jobs");
@@ -54,10 +54,10 @@ async function openWsConnection() {
 
             try {
                 ws.send(JSON.stringify(subSolution));
-                counter++;
                 console.log(
                     `A subsolution was send by worker: ${subSolution.workerID}`
                 );
+                counter++;
                 console.log(counter);
                 const respons = await fetch("/worker/updateTasksComputedDB", {
                     method: "POST",
@@ -71,11 +71,6 @@ async function openWsConnection() {
         }
     });
     return ws;
-}
-
-// Stops the websocket connection
-function stopWsConnection(ws) {
-    ws.close();
 }
 
 // remember_if_yes

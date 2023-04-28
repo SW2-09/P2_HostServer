@@ -23,7 +23,7 @@ workerRoute.get("/register", checkLoggedIn, (req, res) => {
 });
 
 //get data from DB
-workerRoute.get("/updateDB", (req, res) => {
+workerRoute.get("/updateDB", async (req, res) => {
     User.findOne({ name: req.user.name })
         .then((user) => {
             res.json(user);
@@ -142,7 +142,7 @@ workerRoute.post("/login", (req, res, next) => {
 });
 
 //Logout handle
-workerRoute.get("/logout", (req, res) => {
+workerRoute.get("/logout", async (req, res) => {
     req.logout((err) => {
         if (err) {
             return next(err);

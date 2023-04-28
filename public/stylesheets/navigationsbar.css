@@ -61,6 +61,7 @@ a[href="/worker/logout"] {
 /* Style the Settings and Home buttons */
 #settingsButton,
 #homeButton,
+#logoutButton,
 #nameButton {
     border: none;
     background: none;
@@ -72,6 +73,7 @@ a[href="/worker/logout"] {
     font-size: 20px;
 }
 
+#logoutButton:hover,
 #homeButton:hover,
 #settingsButton:hover,
 a[href="/worker/logout"]:hover {
@@ -79,6 +81,7 @@ a[href="/worker/logout"]:hover {
     color: rgb(220, 220, 220);
 }
 
+#logoutButton:active,
 #homeButton:active,
 #settingsButton:active,
 a[href="/worker/logout"]:active {
