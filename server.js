@@ -14,8 +14,10 @@ import mongoDBStore from "connect-mongodb-session";
 import passport from "passport";
 import session from "express-session";
 import flash from "connect-flash";
+import status from "express-status-monitor";
 
 const app = express();
+app.use(status());
 
 app.use(express.static("public")); // Middleware function that serves static files (e.g. css files) https://expressjs.com/en/starter/static-files.html
 app.use(express.json()); // This allows us to parse json data
