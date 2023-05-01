@@ -281,7 +281,6 @@ async function getDataFromDB() {
         throw new Error("HTTP error " + respons.status);
     }
     const data = await respons.json();
-    console.log(data);
     return data;
 }
 

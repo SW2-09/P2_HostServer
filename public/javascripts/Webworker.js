@@ -20,8 +20,10 @@ async function openWsConnection() {
                   "workerId": "${workerId}"}`);
             }, 2000);
         } else {
-            console.log(`You recieved task:\n` + e.data);
             let nextSubtask = JSON.parse(e.data);
+            console.log(`You recieved task\n
+                         jobId: ${nextSubtask.jobId}
+                         Subtask: ${nextSubtask.taskId}`);
 
             let alg = new Function("A", "B", nextSubtask.alg);
             let solution;
@@ -60,9 +62,8 @@ async function openWsConnection() {
                 ws.send(JSON.stringify(subSolution));
                 counter++;
                 console.log(
-                    `A subsolution was send by worker: ${subSolution.workerID}`
+                    `A subsolution was send by worker: ${subSolution.taskId}`
                 );
-                console.log(counter);
                 const respons = await fetch("/worker/updateTasksComputedDB", {
                     method: "POST",
                     headers: {
