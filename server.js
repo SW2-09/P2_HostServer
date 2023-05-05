@@ -57,14 +57,14 @@ app.use(
         name: "Hostserver",
         secret: "HostSecret",
         resave: false,
-        saveUninitialized: true,
+        saveUninitialized: false,
         store: store,
         cookie: { maxAge: 1000 * 60 * 60 * 24 * 7 }, // 1 week
     })
 );
 
 //Bodyparser
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 
 // Passport middleware
 app.use(passport.initialize());
