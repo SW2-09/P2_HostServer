@@ -45,7 +45,7 @@ async function openWsConnection() {
                 }
                 default:
                     ws.send('{"data": "ready for work"}');
-                    return ws;
+                    break;
             }
 
             let jobId = nextSubtask.jobId;
@@ -70,12 +70,14 @@ async function openWsConnection() {
                         "Content-Type": "application/json",
                     },
                 });
+                if (!respons.ok) {
+                    throw new Error("HTTP error " + respons.status);
+                }
             } catch (err) {
                 console.log(err);
             }
         }
     });
-    return ws;
 }
 
 // Stops the websocket connection
