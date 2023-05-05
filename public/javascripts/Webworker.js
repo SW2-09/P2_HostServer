@@ -13,12 +13,10 @@ async function openWsConnection() {
     };
 
     ws.addEventListener("message", async (e) => {
-        if(e.data === "init"){
-            ws.send(`{"data": "init",
+        if (e.data === "connected") {
+            ws.send(`{"data": "connected",
             "workerId": "${workerId}"}`);
-        }
-        
-        if (e.data === "standby") {
+        } else if (e.data === "standby") {
             console.log("Not work to do, waiting for new jobs");
             setTimeout(() => {
                 ws.send(`{"data": "ready for work",

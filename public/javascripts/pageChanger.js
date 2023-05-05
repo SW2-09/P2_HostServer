@@ -322,7 +322,7 @@ async function changePageToHome() {
 
 async function showFrontPage() {
     const content = await getContent();
-    mainDiv.innerHTML = content.AccountSettings;
+    mainDiv.innerHTML = content.VideoStream;
 }
 
 showFrontPage();
