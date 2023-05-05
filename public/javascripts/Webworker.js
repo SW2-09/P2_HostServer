@@ -13,12 +13,17 @@ async function openWsConnection() {
     };
 
     ws.addEventListener("message", async (e) => {
-        if (e.data === "0") {
+        if(e.data === "init"){
+            ws.send(`{"data": "init",
+            "workerId": "${workerId}"}`);
+        }
+        
+        if (e.data === "standby") {
             console.log("Not work to do, waiting for new jobs");
             setTimeout(() => {
                 ws.send(`{"data": "ready for work",
                   "workerId": "${workerId}"}`);
-            }, 2000);
+            }, 5000);
         } else {
             let nextSubtask = JSON.parse(e.data);
             console.log(`You recieved task\n
