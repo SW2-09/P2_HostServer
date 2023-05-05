@@ -13,12 +13,15 @@ async function openWsConnection() {
     };
 
     ws.addEventListener("message", async (e) => {
-        if (e.data === "0") {
+        if (e.data === "connected") {
+            ws.send(`{"data": "connected",
+            "workerId": "${workerId}"}`);
+        } else if (e.data === "standby") {
             console.log("Not work to do, waiting for new jobs");
             setTimeout(() => {
                 ws.send(`{"data": "ready for work",
                   "workerId": "${workerId}"}`);
-            }, 2000);
+            }, 5000);
         } else {
             let nextSubtask = JSON.parse(e.data);
             console.log(`You recieved task\n
@@ -45,7 +48,7 @@ async function openWsConnection() {
                 }
                 default:
                     ws.send('{"data": "ready for work"}');
-                    return ws;
+                    break;
             }
 
             let jobId = nextSubtask.jobId;
@@ -70,12 +73,14 @@ async function openWsConnection() {
                         "Content-Type": "application/json",
                     },
                 });
+                if (!respons.ok) {
+                    throw new Error("HTTP error " + respons.status);
+                }
             } catch (err) {
                 console.log(err);
             }
         }
     });
-    return ws;
 }
 
 // Stops the websocket connection

@@ -20,7 +20,7 @@ async function getContent() {
       <div class="headerItems">
         <button id="settingsButton" > Settings </button>
         <button id="logoutButton" > Logout </button>
-        <button id="nameButton"> ${name} </button>
+        <button id="nameButton"> ${userId} </button>
       </div>
     </header>
       <div class="left">
@@ -44,7 +44,7 @@ async function getContent() {
       <div class="headerItems">
         <button id="homeButton" > Home </button>
         <button id="logoutButton" > Logout </button>
-        <button id="nameButton"> ${name} </button>
+        <button id="nameButton"> ${userId} </button>
       </div>
     </header>
       <div class="userinfo">
@@ -293,9 +293,9 @@ async function fetchDataDB() {
         const respons = await getDataFromDB();
         tasks_computed = respons.tasks_computed;
         compute = respons.compute;
-        name = respons.name;
+        userId = respons.name;
     }
-    return { tasks_computed, compute, name };
+    return { tasks_computed, compute, userId };
 }
 
 /**
@@ -322,7 +322,7 @@ async function changePageToHome() {
 
 async function showFrontPage() {
     const content = await getContent();
-    mainDiv.innerHTML = content.AccountSettings;
+    mainDiv.innerHTML = content.VideoStream;
 }
 
 showFrontPage();
