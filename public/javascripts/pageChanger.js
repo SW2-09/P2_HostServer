@@ -1,6 +1,7 @@
 let tasks_computed = null;
 let compute = null;
 let userId = null;
+let name = null;
 
 const mainDiv = document.getElementById("mainDiv");
 
@@ -20,7 +21,7 @@ async function getContent() {
       <div class="headerItems">
         <button id="settingsButton" > Settings </button>
         <button id="logoutButton" > Logout </button>
-        <button id="nameButton"> ${userId} </button>
+        <button id="nameButton"> ${name} </button>
       </div>
     </header>
       <div class="left">
@@ -44,7 +45,7 @@ async function getContent() {
       <div class="headerItems">
         <button id="homeButton" > Home </button>
         <button id="logoutButton" > Logout </button>
-        <button id="nameButton"> ${userId} </button>
+        <button id="nameButton"> ${name} </button>
       </div>
     </header>
       <div class="userinfo">
@@ -289,13 +290,19 @@ async function getDataFromDB() {
  * @returns tasks_computed, the number of subtasks completed.    OG MULIGVVIS NAVN
  */
 async function fetchDataDB() {
-    if (tasks_computed === null || compute === null) {
+    if (
+        tasks_computed === null ||
+        compute === null ||
+        userId === null ||
+        name === null
+    ) {
         const respons = await getDataFromDB();
         tasks_computed = respons.tasks_computed;
         compute = respons.compute;
-        userId = respons.name;
+        userId = respons.userId;
+        name = respons.name;
     }
-    return { tasks_computed, compute, userId };
+    return { tasks_computed, compute, name, userId };
 }
 
 /**
