@@ -2,7 +2,12 @@ let ws;
 let subtasks_completed = 0;
 let counter = 0;
 
-// open ws connection and hand  er for "message" events
+// open ws connection and hander for "message" events
+/**
+ * Opens a WebSocket connction to `ws://localhost:3443` and handles incomming `message` events.
+ *
+ * @throws {Error} If there's an HTTP error when updating tasks in the database.
+ */
 async function openWsConnection() {
     ws = new WebSocket("ws://localhost:3443");
     let workerId;
@@ -12,6 +17,7 @@ async function openWsConnection() {
         workerId = e.data.userId;
     };
 
+    //Event listener for messages from WebSocket server.
     ws.addEventListener("message", async (e) => {
         if (e.data === "connected") {
             ws.send(`{"data": "connected",
@@ -83,7 +89,11 @@ async function openWsConnection() {
     });
 }
 
-// Stops the websocket connection
+/**
+ * Closes the ws connection
+ *
+ * @param {WebSocket} ws - The WebSocket connection to close.
+ */
 function stopWsConnection(ws) {
     ws.close();
 }

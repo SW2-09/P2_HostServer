@@ -139,9 +139,10 @@ async function handleChange() {
 }
 
 /**
- *
+ * Updates the text of subtasksValue.
+ * @param {string} subtasksValue - The ID of the element to update.
+ * @param {number} tasks_computed - The new value for the element.
  */
-
 function updateTextTasksComputed(subtasksValue, tasks_computed) {
     const element = document.getElementById("subtasksValue");
     if (subtasksValue) {
@@ -150,8 +151,9 @@ function updateTextTasksComputed(subtasksValue, tasks_computed) {
 }
 
 /**
- *
- *
+ * Updates the text of pointsValue.
+ * @param {string} subtasksValue - The ID of the element to update.
+ * @param {number} tasks_computed - The new value for the element.
  */
 function updateTextPoints(pointsValue, tasks_computed) {
     const element = document.getElementById("pointsValue");
@@ -274,7 +276,9 @@ mainDiv.addEventListener("click", async (e) => {
 });
 
 /**
- * An async function that fetches data from the database.
+ * Fetches data from the database.
+ * @returns {Promise<object>} - Object of the user.
+ * @throws {Error} If there's an HTTP error.
  */
 async function getDataFromDB() {
     let respons = await fetch("/worker/updateDB");
@@ -287,7 +291,8 @@ async function getDataFromDB() {
 
 /**
  * An async function that await the function fetchDataDB() if both boolean is null.
- * @returns tasks_computed, the number of subtasks completed.    OG MULIGVVIS NAVN
+ * @returns {Promise<object>} tasks_computed, the number of subtasks completed.
+ * @throws {Error} If there's an HTTP error.
  */
 async function fetchDataDB() {
     if (
@@ -326,7 +331,9 @@ async function changePageToHome() {
         mainDiv.innerHTML = content.VideoStream;
     }
 }
-
+/**
+ * Shows the front page of the application.
+ */
 async function showFrontPage() {
     const content = await getContent();
     mainDiv.innerHTML = content.VideoStream;

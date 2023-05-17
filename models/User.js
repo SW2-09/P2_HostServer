@@ -12,7 +12,7 @@ const userSchema = new mongoose.Schema({
     },
     userId: {
         type: String,
-        required: true
+        required: true,
     },
     tasks_computed: {
         type: Number,
