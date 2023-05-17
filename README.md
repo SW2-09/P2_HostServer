@@ -1,4 +1,4 @@
-# GridServer - GridFlix
+# HostServer - GridFlix
 
 Grid Computing project at Aalborg University on 2nd semester.
 
