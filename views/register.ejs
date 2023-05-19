@@ -16,6 +16,9 @@
             name="name"
             class="form-control"
             placeholder="Enter Username"
+            maxlength="20"
+            min="1"
+            oninput="this.value = this.value.replace(/[^a-zA-Z0-9-_]/g, '')"
             value="<%= typeof name != 'undefined' ? name : '' %>"
           />
         </div>
@@ -27,6 +30,8 @@
             name="password"
             class="form-control"
             placeholder="Create Password"
+            maxlength="20"
+            min="8"
             value="<%= typeof password != 'undefined' ? password : '' %>"
           />
         </div>
@@ -38,6 +43,8 @@
             name="password2"
             class="form-control"
             placeholder="Confirm Password"
+            maxlength="20"
+            min="8"
             value="<%= typeof password2 != 'undefined' ? password2 : '' %>"
           />
         </div>
