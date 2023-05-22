@@ -31,7 +31,7 @@
             class="form-control"
             placeholder="Create Password"
             maxlength="20"
-            min="8"
+            minlength="1"
             value="<%= typeof password != 'undefined' ? password : '' %>"
           />
         </div>
@@ -44,7 +44,7 @@
             class="form-control"
             placeholder="Confirm Password"
             maxlength="20"
-            min="8"
+            minlength="1"
             value="<%= typeof password2 != 'undefined' ? password2 : '' %>"
           />
         </div>
