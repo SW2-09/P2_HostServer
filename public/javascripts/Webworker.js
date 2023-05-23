@@ -27,7 +27,7 @@ async function openWsConnection() {
             setTimeout(() => {
                 ws.send(`{"data": "ready for work",
                   "workerId": "${workerId}"}`);
-            }, 5000);
+            }, 10000);
         } else {
             let nextSubtask = JSON.parse(e.data);
             console.log(`You recieved task\n
