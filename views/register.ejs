@@ -62,3 +62,30 @@
     </div>
   </div>
 </body>
+
+<script>
+    // Prevents user from entering special characters in the password field
+    passinput = document.getElementById('password');
+    passinput2 = document.getElementById('password2');
+    Uploadform = document.getElementById('registerform');
+
+    
+    passinput.addEventListener('input',function(event) {
+        let password = event.target.value;
+        if(/[^a-zA-Z0-9-_]/.test(password)) {
+            alert("Only letters, numbers, - and _ allowed");
+            event.target.value = password.replace(/[^a-zA-Z0-9-_]/g, '');
+            return
+        }
+    });
+
+    passinput2.addEventListener('input', function(event) {
+        passinput2.setCustomValidity("");
+        let password2 = event.target.value;
+        if(/[^a-zA-Z0-9-_]/.test(password2)) {
+            alert("Only letters, numbers, - and _ allowed");
+            event.target.value = password2.replace(/[^a-zA-Z0-9-_]/g, '');
+            return
+        }
+    });
+</script>
