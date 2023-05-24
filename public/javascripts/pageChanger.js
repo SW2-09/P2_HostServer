@@ -16,12 +16,12 @@ async function getContent() {
         VideoStream: `
     <header>
       <div class="header_logo">
-        <label class="logo"> GridFlix </label>
+        <label class="logo"> Gridflix </label>
       </div>
       <div class="headerItems">
         <button id="settingsButton" > Settings </button>
-        <button id="logoutButton" > Logout </button>
         <button id="nameButton"> ${name} </button>
+        <button id="logoutButton" > Logout </button>
       </div>
     </header>
       <div class="left">
@@ -40,12 +40,12 @@ async function getContent() {
     <div class="frontpage">
     <header>
       <div class="header_logo">
-        <label class="logo"> GridFlix</label>
+        <label class="logo"> Gridflix</label>
       </div>
       <div class="headerItems">
         <button id="homeButton" > Home </button>
-        <button id="logoutButton" > Logout </button>
         <button id="nameButton"> ${name} </button>
+        <button id="logoutButton" > Logout </button>
       </div>
     </header>
       <div class="userinfo">
@@ -60,7 +60,7 @@ async function getContent() {
               compute
                   ? `
               <div class="computeYes" id="computeYes">
-                You are currently computing while watching GridFlix
+                You are currently computing while watching Gridflix
                 <input
                   type="button"
                   name="changeComputeButton"
@@ -72,7 +72,7 @@ async function getContent() {
             `
                   : `
               <div class="computeNo" id="computeNo">
-                You are currently not computing while watching GridFlix
+                You are currently not computing while watching Gridflix
                 <input
                   type="button"
                   name="changeCompute"

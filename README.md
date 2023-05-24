@@ -1,10 +1,10 @@
-# HostServer - GridFlix
+# HostServer - Gridflix
 
 Grid Computing project at Aalborg University on 2nd semester.
 
 ## Introduction
 
-The system aims to use an exisiting website as host website to recruit users for a browser based grid network. The system intents to minimize the host-code and focuses on communication between the GridServer and the host website's users. This is a proof-of-concept design, in which includes a interface for users on the HostServer and for buyers on the GridServer.
+The system aims to use an exisiting website as host website to recruit users for a browser based grid network. The system intents to minimize the host-code and focuses on communication between the grid server and the host website's users. This is a proof of concept design, in which includes a interface for users on the host server and for buyers on the grid server.
 Jobs are divided into subtasks, queued and distributed among users avaiable on the host website. Failed subtasks are handled, and once all subtasks are completed they're combined into a complete solution for the buyer to download.
 
 ## Installation
