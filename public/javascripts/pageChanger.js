@@ -20,8 +20,8 @@ async function getContent() {
       </div>
       <div class="headerItems">
         <button id="settingsButton" > Settings </button>
-        <button id="logoutButton" > Logout </button>
         <button id="nameButton"> ${name} </button>
+        <button id="logoutButton" > Logout </button>
       </div>
     </header>
       <div class="left">
@@ -44,8 +44,8 @@ async function getContent() {
       </div>
       <div class="headerItems">
         <button id="homeButton" > Home </button>
-        <button id="logoutButton" > Logout </button>
         <button id="nameButton"> ${name} </button>
+        <button id="logoutButton" > Logout </button>
       </div>
     </header>
       <div class="userinfo">
