@@ -67,7 +67,6 @@ workerRoute.post("/updateTasksComputedDB", async (req, res) => {
 
 //register handle
 workerRoute.post("/register", (req, res) => {
-    console.log(req.body);
     const name = sanitize(req.body.name);
     const password = sanitize(req.body.password);
     const password2 = sanitize(req.body.password2);
